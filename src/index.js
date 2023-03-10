@@ -1,7 +1,4 @@
-import Example from "./scripts/example";
+const canvas = document.querySelector("2d")
+const context = canvas.getContext("2d")
 
-document.addEventListener("DOMContentLoaded", () => {
-  // console.log("hello world")
-  const main = document.getElementById("main");
-  new Example(main);
-})
+console.log(context)
