@@ -38,6 +38,7 @@ class Player {
           this.keys.right.pressed = true
           break
         case 87:
+          console.log("up")
           this.velocity.y -= 10
           break
       }
@@ -57,6 +58,7 @@ class Player {
           this.keys.right.pressed = false
           break
         case 87:
+          console.log("up")
           this.velocity.y -= 10
           break
       }
