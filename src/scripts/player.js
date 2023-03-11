@@ -1,4 +1,3 @@
-
 const gravity = 0.5;
 
 class Player {
@@ -66,7 +65,7 @@ class Player {
   }
 
   draw() {
-    this.context.fillStyle='red';
+    this.context.fillStyle ='red';
     this.context.fillRect(
       this.position.x,
       this.position.y,
