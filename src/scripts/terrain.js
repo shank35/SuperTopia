@@ -1,3 +1,4 @@
+// terrain.js
 class Platform {
 
   constructor(context, canvas) {
@@ -10,6 +11,7 @@ class Platform {
     this.height = 20
     this.context = context
     this.canvas = canvas
+
   }
 
   draw() {
