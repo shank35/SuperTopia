@@ -17,6 +17,7 @@ class Player {
     this.context = context
     this.canvas = canvas
     this.platforms = platforms
+    this.traveledCount = 0;
 
     this.keys = {
       right: {
@@ -104,15 +105,19 @@ class Player {
     } else {
       this.velocity.x = 0
       if (this.keys.right.pressed) {
+        this.traveledCount += 5
         this.platforms.forEach(platform => {
           platform.position.x -= 5
         })
       } else if (this.keys.left.pressed) {
+        this.traveledCount -= 5
         this.platforms.forEach(platform => {
           platform.position.x += 5
         })
       }
+      
     }
+    console.log(this.traveledCount);
 
     // platform collision detection
     this.platforms.forEach(platform => {
@@ -125,6 +130,11 @@ class Player {
         this.velocity.y = 0;
       }
     })
+    
+    if (this.traveledCount > 2000) {
+      console.log("YOU WIN")
+    }
+
   }
 
 }
