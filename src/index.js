@@ -10,9 +10,14 @@ document.addEventListener("DOMContentLoaded", () => {
   canvas.width = 800;
   canvas.height = 600;
 
-  // const platform = new Platform(this.context, this.canvas);
-  const platform = new Platform(context, canvas);
-  const player = new Player(context, canvas, platform);
+  
+  const platforms = [
+    new Platform(context, canvas, 
+    {x: 200, y: 100}),
+    new Platform(context, canvas,
+      {x: 500, y: 200})
+  ];
+  const player = new Player(context, canvas, platforms);
   player.animate();
 
 });

@@ -3,7 +3,7 @@ const gravity = 0.5;
 
 class Player {
 
-  constructor(context, canvas, platform) {
+  constructor(context, canvas, platforms) {
     this.position = {
       x: 100,
       y: 100
@@ -16,7 +16,7 @@ class Player {
     this.height = 30
     this.context = context
     this.canvas = canvas
-    this.platform = platform
+    this.platforms = platforms
 
     this.keys = {
       right: {
@@ -82,7 +82,6 @@ class Player {
     this.position.y += this.velocity.y
     this.position.x += this.velocity.x
     this.draw();
-    this.platform.draw();
     if (this.position.y + this.height + this.velocity.y <= this.canvas.height) {
       this.velocity.y += gravity;
     } else {
@@ -95,23 +94,37 @@ class Player {
     requestAnimationFrame(boundFunc);
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.update();
-    if (this.keys.right.pressed) {
+    this.platforms.forEach(platform => {
+      platform.draw();
+    })
+    if (this.keys.right.pressed && this.position.x < 400) {
       this.velocity.x = 5
-    } else if (this.keys.left.pressed) {
+    } else if (this.keys.left.pressed && this.position.x > 0) {
       this.velocity.x = -5
     } else {
       this.velocity.x = 0
+      if (this.keys.right.pressed) {
+        this.platforms.forEach(platform => {
+          platform.position.x -= 5
+        })
+      } else if (this.keys.left.pressed) {
+        this.platforms.forEach(platform => {
+          platform.position.x += 5
+        })
+      }
     }
 
     // platform collision detection
-    if (this.position.y + this.height <= 
-      this.platform.position.y && 
-      this.position.y + this.height + this.velocity.y >= 
-      this.platform.position.y &&
-      this.position.x + this.width >= this.platform.position.x && 
-      this.position.x <= this.platform.position.x + this.platform.width) {
-      this.velocity.y = 0;
-    }
+    this.platforms.forEach(platform => {
+      if (this.position.y + this.height <= 
+        platform.position.y && 
+        this.position.y + this.height + this.velocity.y >= 
+        platform.position.y &&
+        this.position.x + this.width >= platform.position.x && 
+        this.position.x <= platform.position.x + platform.width) {
+        this.velocity.y = 0;
+      }
+    })
   }
 
 }

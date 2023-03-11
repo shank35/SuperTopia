@@ -1,10 +1,10 @@
 // terrain.js
 class Platform {
 
-  constructor(context, canvas) {
+  constructor(context, canvas, {x, y}) {
     this.position = {
-      x: 300,
-      y: 500
+      x: x,
+      y: y
     }
 
     this.width = 200
