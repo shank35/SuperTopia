@@ -1,27 +1,21 @@
 // terrain.js
 class Platform {
 
-  constructor(context, canvas, {x, y}) {
+  constructor(context, canvas, {x, y, image}) {
     this.position = {
       x: x,
       y: y
     }
-
-    this.width = 200
-    this.height = 20
+    this.image = image
+    this.width = image.width
+    this.height = image.height
     this.context = context
     this.canvas = canvas
 
   }
 
   draw() {
-    this.context.fillStyle ='blue';
-    this.context.fillRect(
-      this.position.x,
-      this.position.y,
-      this.width,
-      this.height
-      );
+    this.context.drawImage(this.image, this.position.x, this.position.y)
   }
   
 }

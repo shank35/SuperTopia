@@ -29,7 +29,20 @@ const config = {
           },
           'sass-loader', // compiles sass to css
         ]
-      }
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 8192,
+              name: '[name].[ext]',
+              outputPath: 'images',
+            },
+          },
+        ],
+      },
     ]
   },
   plugins: [new MiniCssExtractPlugin()]

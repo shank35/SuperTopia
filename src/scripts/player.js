@@ -94,13 +94,14 @@ class Player {
     let boundFunc = this.animate.bind(this)
     requestAnimationFrame(boundFunc);
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.update();
     this.platforms.forEach(platform => {
       platform.draw();
     })
+    this.update();
+
     if (this.keys.right.pressed && this.position.x < 400) {
       this.velocity.x = 5
-    } else if (this.keys.left.pressed && this.position.x > 0) {
+    } else if (this.keys.left.pressed && this.position.x > 10) {
       this.velocity.x = -5
     } else {
       this.velocity.x = 0
