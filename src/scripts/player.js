@@ -1,24 +1,35 @@
 // player.js
-const gravity = 0.5;
+
+import { resetMap } from "../index.js"
+
+const gravity = 1.2;
 
 class Player {
 
-  constructor(context, canvas, platforms, backgrounds) {
-    this.position = {
-      x: 100,
-      y: 100
-    }
-    this.velocity = {
-      x: 0,
-      y: 0
-    }
-    this.width = 30
-    this.height = 30
+  constructor(context, canvas, platforms, backgrounds, sprites) {
+
+    this.position = { x: 100, y: 100 }
+    this.velocity = { x: 0, y: 0 }
+    this.speed = 10
+
+    this.width = 66
+    this.height = 150
+
     this.context = context
     this.canvas = canvas
+
     this.platforms = platforms
     this.backgrounds =  backgrounds
+
+    this.sprites = sprites
+    this.currentSprite = this.sprites.stand.right
+    this.currentCropWidth = 177
+
+    this.frames = 0
+
     this.traveledCount = 0;
+
+    this.currentKey = ""
 
     this.keys = {
       right: {
@@ -28,11 +39,13 @@ class Player {
         pressed: false
       }
     }
+
     window.addEventListener("keydown", ({keyCode}) => {
       switch (keyCode) {
         case 65:
           console.log("left")
           this.keys.left.pressed = true
+          this.currentKey = "left"
           break
         case 83:
           console.log("down")
@@ -40,10 +53,13 @@ class Player {
         case 68:
           console.log("right")
           this.keys.right.pressed = true
+          this.currentKey = "right"
           break
         case 87:
           console.log("up")
-          this.velocity.y -= 10
+          if (this.velocity.y === 0) {
+            this.velocity.y -= 20
+          }
           break
       }
     });
@@ -63,24 +79,32 @@ class Player {
           break
         case 87:
           console.log("up")
-          this.velocity.y -= 10
           break
       }
     });
 
   }
 
+  reset() {
+    this.traveledCount = 0;
+  }
+
   draw() {
-    this.context.fillStyle ='red';
-    this.context.fillRect(
-      this.position.x,
-      this.position.y,
-      this.width,
-      this.height
-      );
+    this.context.drawImage(this.currentSprite,
+    this.currentCropWidth * this.frames,
+    0,
+    this.currentCropWidth,
+    400,
+    this.position.x, this.position.y, this.width, this.height)
   }
 
   update () {
+    this.frames += 1
+    if (this.frames > 59 && (this.currentSprite === this.sprites.stand.right || this.currentSprite === this.sprites.stand.left)) {
+      this.frames = 0
+    } else if (this.frames > 29 && (this.currentSprite === this.sprites.run.right || this.currentSprite === this.sprites.run.left )) {
+      this.frames = 0
+    }
     this.position.y += this.velocity.y
     this.position.x += this.velocity.x
     this.draw();
@@ -104,31 +128,30 @@ class Player {
     this.update();
 
     if (this.keys.right.pressed && this.position.x < 400) {
-      this.velocity.x = 5
-    } else if (this.keys.left.pressed && this.position.x > 0) {
-      this.velocity.x = -5
+      this.velocity.x = this.speed
+    } else if ((this.keys.left.pressed && this.position.x > 0) || this.keys.left.pressed && this.traveledCount === 0 && this.position.x > 0) {
+      this.velocity.x = -this.speed
     } else {
       this.velocity.x = 0
       if (this.keys.right.pressed) {
-        this.traveledCount += 5
+        this.traveledCount += this.speed
         this.platforms.forEach(platform => {
-          platform.position.x -= 5
+          platform.position.x -= this.speed
         })
         this.backgrounds.forEach(background => {
-          background.position.x -= 3
+          background.position.x -= this.speed * 0.66
         })
-      } else if (this.keys.left.pressed) {
-        this.traveledCount -= 5
+      } else if (this.keys.left.pressed && this.traveledCount > 0) {
+        this.traveledCount -= this.speed
         this.platforms.forEach(platform => {
-          platform.position.x += 5
+          platform.position.x += this.speed
         })
         this.backgrounds.forEach(background => {
-          background.position.x += 3
+          background.position.x += this.speed * 0.66
         })
       }
       
     }
-    console.log(this.traveledCount);
 
     // platform collision detection
     this.platforms.forEach(platform => {
@@ -141,10 +164,35 @@ class Player {
         this.velocity.y = 0;
       }
     })
+
+    if (this.keys.right.pressed && this.currentKey === "right" && this.currentSprite !== this.sprites.run.right) {
+      this.frames = 1
+      this.currentSprite = this.sprites.run.right
+      this.currentCropWidth = this.sprites.run.cropWidth
+      this.width = this.sprites.run.width
+    } else if (this.keys.left.pressed && this.currentKey === "left" && this.currentSprite !== this.sprites.run.left) {
+      this.currentSprite = this.sprites.run.left
+      this.currentCropWidth = this.sprites.run.cropWidth
+      this.width = this.sprites.run.width
+    } else if (!this.keys.left.pressed && this.currentKey === "left" && this.currentSprite !== this.sprites.stand.left) {
+      this.currentSprite = this.sprites.stand.left
+      this.currentCropWidth = this.sprites.stand.cropWidth
+      this.width = this.sprites.stand.width
+    } else if (!this.keys.right.pressed && this.currentKey === "right" && this.currentSprite !== this.sprites.stand.right) {
+      this.currentSprite = this.sprites.stand.right
+      this.currentCropWidth = this.sprites.stand.cropWidth
+      this.width = this.sprites.stand.width
+    }
+
     
     // win condition
-    if (this.traveledCount > 2000) {
+    if (this.traveledCount > 5100) {
       console.log("YOU WIN")
+    }
+
+    // lose condition
+    if (this.position.y > this.canvas.height) {
+      resetMap()
     }
 
   }
