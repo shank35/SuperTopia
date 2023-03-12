@@ -56,7 +56,7 @@ let sprites = {
   },
   run: {
     right: createImage(spriteRunRight),
-    left: createImage(spriteRunLeft),
+    left: createImage(spriteRunRight),
     cropWidth: 341,
     width: 127.875
   }
