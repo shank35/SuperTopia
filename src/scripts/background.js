@@ -1,5 +1,5 @@
 // terrain.js
-class Platform {
+class Background {
 
   constructor(context, canvas, {x, y, image}) {
     this.position = {
@@ -20,4 +20,4 @@ class Platform {
   
 }
 
-export default Platform;
+export default Background;

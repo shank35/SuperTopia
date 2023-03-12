@@ -30,7 +30,7 @@ Implementation Timeline
 
     Monday:  Create the player class and implement the player movement. Create the sprite for the character so that the character looks like its moving.
 
-    Tuesday: Be able to scroll the background, so that the character appears to be moving.
+    Tuesday: Be able to scroll the background, so that the character appears to be moving. Score, coins, world, time, lives on the map.
 
     Wednesday: Create the enemies on the map, moving back and forth on a certain area of the map. Create power ups so that the player can get special powers.
 
