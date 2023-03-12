@@ -3,7 +3,7 @@ const gravity = 0.5;
 
 class Player {
 
-  constructor(context, canvas, platforms) {
+  constructor(context, canvas, platforms, backgrounds) {
     this.position = {
       x: 100,
       y: 100
@@ -17,6 +17,7 @@ class Player {
     this.context = context
     this.canvas = canvas
     this.platforms = platforms
+    this.backgrounds =  backgrounds
     this.traveledCount = 0;
 
     this.keys = {
@@ -85,15 +86,18 @@ class Player {
     this.draw();
     if (this.position.y + this.height + this.velocity.y <= this.canvas.height) {
       this.velocity.y += gravity;
-    } else {
-      this.velocity.y = 0
-    }
+    } 
   }
 
   animate() {
     let boundFunc = this.animate.bind(this)
     requestAnimationFrame(boundFunc);
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    this.backgrounds.forEach(background => {
+      background.draw()
+    })
+
     this.platforms.forEach(platform => {
       platform.draw();
     })
@@ -101,7 +105,7 @@ class Player {
 
     if (this.keys.right.pressed && this.position.x < 400) {
       this.velocity.x = 5
-    } else if (this.keys.left.pressed && this.position.x > 10) {
+    } else if (this.keys.left.pressed && this.position.x > 0) {
       this.velocity.x = -5
     } else {
       this.velocity.x = 0
@@ -110,10 +114,16 @@ class Player {
         this.platforms.forEach(platform => {
           platform.position.x -= 5
         })
+        this.backgrounds.forEach(background => {
+          background.position.x -= 3
+        })
       } else if (this.keys.left.pressed) {
         this.traveledCount -= 5
         this.platforms.forEach(platform => {
           platform.position.x += 5
+        })
+        this.backgrounds.forEach(background => {
+          background.position.x += 3
         })
       }
       
@@ -132,6 +142,7 @@ class Player {
       }
     })
     
+    // win condition
     if (this.traveledCount > 2000) {
       console.log("YOU WIN")
     }
