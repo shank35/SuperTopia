@@ -186,7 +186,7 @@ class Player {
 
     
     // win condition
-    if (this.traveledCount > 5100) {
+    if (this.traveledCount > 4860) {
       console.log("YOU WIN")
     }
 

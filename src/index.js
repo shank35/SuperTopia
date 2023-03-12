@@ -74,7 +74,7 @@ function resetMap() {
     new Platform(context, canvas, {x: platformImage.width * 2 + 200, y: 460, image: platformImage}),
     new Platform(context, canvas, {x: platformImage.width * 3 + 380, y: 460, image: platformImage}),
     new Platform(context, canvas, {x: platformImage.width * 4 + 380, y: 460, image: platformImage}),
-    new Platform(context, canvas, {x: platformImage.width * 5 + 950, y: 460, image: platformImage})
+    new Platform(context, canvas, {x: platformImage.width * 5 + 810, y: 460, image: platformImage})
   ];
   
   backgroundImage = createImage(backgroundImg);
