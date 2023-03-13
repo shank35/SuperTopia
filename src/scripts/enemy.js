@@ -4,7 +4,7 @@ const gravity = 1.2;
 
 class Enemy {
 
-  constructor( context, canvas, {position, velocity, distance = {limit: 50, traveled: 0}} ) {
+  constructor( context, canvas, {position, velocity, distance} ) {
     this.position = { x: position.x, y: position.y }
     this.velocity = { x: velocity.x, y: velocity.y }
 
@@ -15,6 +15,10 @@ class Enemy {
     this.canvas = canvas
 
     this.distance = distance
+
+    this.initialPositionX = position.x
+    this.initialPositionY = position.y
+
 
   }
 
@@ -40,7 +44,12 @@ class Enemy {
       this.distance.traveled = 0
       this.velocity.x = -this.velocity.x
     }
-    console.log(this.distance.traveled)
+  }
+
+  reset() {
+    this.position.x = this.initialPositionX
+    this.position.y = this.initialPositionY
+    this.distance.traveled = 0;
   }
 
 }

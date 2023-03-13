@@ -108,6 +108,9 @@ async function resetMap() {
   player.position = { x: 100, y: 100 }; 
   player.platforms = platforms;
   player.backgrounds = backgrounds;
+  enemies.forEach(enemy => {
+    enemy.reset();
+  });
 }
 
 
