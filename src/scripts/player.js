@@ -110,24 +110,24 @@ class Player {
   }
 
   draw() {
-    this.context.drawImage(this.currentSprite,
-    this.currentCropWidth * this.frames,
-    0,
-    this.currentCropWidth,
-    400,
-    this.position.x, this.position.y, this.width, this.height)
-    // this.context.fillStyle = 'red';
+    // this.context.drawImage(this.currentSprite,
+    // this.currentCropWidth * this.frames,
+    // 0,
+    // this.currentCropWidth,
+    // 400,
+    // this.position.x, this.position.y, this.width, this.height)
+    this.context.fillStyle = 'red';
     
-    // this.context.fillRect(this.position.x, this.position.y, 50, 150);
+    this.context.fillRect(this.position.x, this.position.y, this.width, this.height);
   }
 
   update () {
-    this.frames += 1
-    if (this.frames > 59 && (this.currentSprite === this.sprites.stand.right || this.currentSprite === this.sprites.stand.left)) {
-      this.frames = 0
-    } else if (this.frames > 29 && (this.currentSprite === this.sprites.run.right || this.currentSprite === this.sprites.run.left )) {
-      this.frames = 0
-    }
+    // this.frames += 1
+    // if (this.frames > 59 && (this.currentSprite === this.sprites.stand.right || this.currentSprite === this.sprites.stand.left)) {
+    //   this.frames = 0
+    // } else if (this.frames > 29 && (this.currentSprite === this.sprites.run.right || this.currentSprite === this.sprites.run.left )) {
+    //   this.frames = 0
+    // }
     this.position.y += this.velocity.y
     this.position.x += this.velocity.x
     this.draw();
@@ -171,7 +171,7 @@ class Player {
 
     if (this.keys.right.pressed && this.position.x < 400) {
       this.velocity.x = this.speed
-    } else if ((this.keys.left.pressed && this.position.x > 0) || this.keys.left.pressed && this.traveledCount === 0 && this.position.x > 0) {
+    } else if ((this.keys.left.pressed && this.position.x > 100) || this.keys.left.pressed && this.traveledCount === 0 && this.position.x > 100) {
       this.velocity.x = -this.speed
     } else {
       this.velocity.x = 0

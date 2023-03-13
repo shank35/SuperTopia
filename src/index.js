@@ -3,7 +3,7 @@ import platform from "./img/platform.png"
 import smallPlatform from "./img/smallPlatform.png"
 import smallPlatform2 from "./img/smallPlatform2.png"
 
-import backgroundImg from "./img/background.png"
+import backgroundImg from "./img/background3.png"
 import objectImg from "./img/object.png"
 import objectImg2 from "./img/object2.png"
 import Background from "./scripts/background";
