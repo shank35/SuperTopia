@@ -6,7 +6,7 @@ const gravity = 1.2;
 
 class Player {
 
-  constructor(context, canvas, platforms, backgrounds, sprites) {
+  constructor(context, canvas, platforms, backgrounds, sprites, enemies) {
 
     this.position = { x: 100, y: 100 }
     this.velocity = { x: 0, y: 0 }
@@ -24,6 +24,8 @@ class Player {
     this.sprites = sprites
     this.currentSprite = this.sprites.stand.right
     this.currentCropWidth = 177
+
+    this.enemies = enemies
 
     this.frames = 0
 
@@ -89,6 +91,24 @@ class Player {
     this.traveledCount = 0;
   }
 
+  collisionDetection ({object, platform}) {
+    return (object.position.y + object.height <= 
+    platform.position.y && 
+    object.position.y + object.height + object.velocity.y >= 
+    platform.position.y &&
+    object.position.x + object.width >= platform.position.x && 
+    object.position.x <= platform.position.x + platform.width)
+  }
+
+  enemyCollisionTop ({object1, object2}) {
+    return (object1.position.y + object1.height <= 
+    object2.position.y && 
+    object1.position.y + object1.height + object1.velocity.y >= 
+    object2.position.y &&
+    object1.position.x + object1.width >= object2.position.x && 
+    object1.position.x <= object2.position.x + object2.width)
+  }
+
   draw() {
     this.context.drawImage(this.currentSprite,
     this.currentCropWidth * this.frames,
@@ -96,6 +116,9 @@ class Player {
     this.currentCropWidth,
     400,
     this.position.x, this.position.y, this.width, this.height)
+    // this.context.fillStyle = 'red';
+    
+    // this.context.fillRect(this.position.x, this.position.y, 50, 150);
   }
 
   update () {
@@ -125,6 +148,25 @@ class Player {
     this.platforms.forEach(platform => {
       platform.draw();
     })
+
+    this.enemies.forEach((enemy, index) => {
+      enemy.update()
+      if (
+        this.enemyCollisionTop({
+        object1: this,
+        object2: enemy
+        })) {
+          this.velocity.y -= 35
+          setTimeout(() => {
+            this.enemies.splice(index, 1)
+          }, 0)
+        } else if (
+          this.position.x + this.width >= enemy.position.x && this.position.y + this.height >= enemy.position.y && this.position.x <= enemy.position.x + enemy.width
+        ) {
+          resetMap()
+        }
+    })
+
     this.update();
 
     if (this.keys.right.pressed && this.position.x < 400) {
@@ -133,6 +175,8 @@ class Player {
       this.velocity.x = -this.speed
     } else {
       this.velocity.x = 0
+
+      //scrolling
       if (this.keys.right.pressed) {
         this.traveledCount += this.speed
         this.platforms.forEach(platform => {
@@ -140,6 +184,9 @@ class Player {
         })
         this.backgrounds.forEach(background => {
           background.position.x -= this.speed * 0.66
+        })
+        this.enemies.forEach(enemy => {
+          enemy.position.x -= this.speed
         })
       } else if (this.keys.left.pressed && this.traveledCount > 0) {
         this.traveledCount -= this.speed
@@ -149,20 +196,25 @@ class Player {
         this.backgrounds.forEach(background => {
           background.position.x += this.speed * 0.66
         })
+        this.enemies.forEach(enemy => {
+          enemy.position.x += this.speed
+        })
       }
       
     }
 
     // platform collision detection
     this.platforms.forEach(platform => {
-      if (this.position.y + this.height <= 
-        platform.position.y && 
-        this.position.y + this.height + this.velocity.y >= 
-        platform.position.y &&
-        this.position.x + this.width >= platform.position.x && 
-        this.position.x <= platform.position.x + platform.width) {
+      if (
+        this.collisionDetection ({object: this, platform: platform})
+      ) {
         this.velocity.y = 0;
       }
+      this.enemies.forEach(enemy => {
+        if (this.collisionDetection ({object: enemy, platform: platform})) {
+          enemy.velocity.y = 0;
+        }
+      })
     })
 
     // sprite switching

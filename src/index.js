@@ -14,6 +14,7 @@ import spriteStandLeft from "./img/spriteStandLeft.png"
 import spriteStandRight from "./img/spriteStandRight.png"
 
 import Player from "./scripts/player";
+import Enemy from "./scripts/Enemy";
 import Platform from "./scripts/terrain";
 
 const canvas = document.getElementById("canvas");
@@ -28,24 +29,33 @@ function createImage(imageSrc) {
   return image;
 }
 
-let platformImage = createImage(platform);
-let platforms = [
+function createImageAsync(imageSrc) {
+  return new Promise( (resolve) => {
+    const image = new Image()
+    image.onload = () => {
+      resolve(image)
+    }
+    image.src = imageSrc
+  })
 
-];
+}
 
-let smallPlatformImage = createImage(smallPlatform);
-let smallPlatforms = [
+let platformImage
+let platforms = [];
 
-];
+let smallPlatformImage
+let smallPlatforms = [];
 
-let backgroundImage = createImage(backgroundImg);
-let objectImage = createImage(objectImg);
-let objectImage2 = createImage(objectImg2);
+let backgroundImage
+let objectImage
+let objectImage2
 
-let backgrounds = [
+let backgrounds = [];
 
-];
-
+let enemies = [
+  new Enemy( context, canvas, {position: {x: 1400, y: 100}, velocity: {x: -0.3, y: 0}, distance: {limit: 200, traveled: 0}} ),
+  new Enemy( context, canvas, {position: {x: 2500, y: 100}, velocity: {x: -0.3, y: 0}, distance: {limit: 200, traveled: 0}} )
+]
 
 let sprites = {
   stand: {
@@ -62,11 +72,13 @@ let sprites = {
   }
 }
 
-const player = new Player(context, canvas, platforms, backgrounds, sprites);
+const player = new Player(context, canvas, platforms, backgrounds, sprites, enemies);
 
-function resetMap() {
+async function resetMap() {
   
-  platformImage = createImage(platform);
+  platformImage = await createImageAsync(platform);
+  smallPlatformImage = await createImageAsync(smallPlatform)
+
   platforms = [
     new Platform(context, canvas, {x: platformImage.width * 4 + 380 + platformImage.width - smallPlatformImage.width, y: 290, image: smallPlatformImage}),
     new Platform(context, canvas, {x: -1, y: 460, image: platformImage}),
@@ -77,9 +89,9 @@ function resetMap() {
     new Platform(context, canvas, {x: platformImage.width * 5 + 810, y: 460, image: platformImage})
   ];
   
-  backgroundImage = createImage(backgroundImg);
-  objectImage = createImage(objectImg);
-  objectImage2 = createImage(objectImg2);
+  backgroundImage = await createImageAsync(backgroundImg);
+  objectImage = await createImageAsync(objectImg);
+  objectImage2 = await createImageAsync(objectImg2);
   
   backgrounds = [
     new Background(context, canvas, { x: 0, y: 0, image: backgroundImage }),
@@ -91,6 +103,7 @@ function resetMap() {
     new Background(context, canvas, { x: -100, y: -70, image: objectImage }),
     new Background(context, canvas, { x: 300, y: -30, image: objectImage2 })
   ];
+
   player.reset();
   player.position = { x: 100, y: 100 }; 
   player.platforms = platforms;
