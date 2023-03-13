@@ -165,6 +165,7 @@ class Player {
       }
     })
 
+    // sprite switching
     if (this.keys.right.pressed && this.currentKey === "right" && this.currentSprite !== this.sprites.run.right) {
       this.frames = 1
       this.currentSprite = this.sprites.run.right
