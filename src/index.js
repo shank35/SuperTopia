@@ -108,10 +108,10 @@ function drawTimerBar() {
 }
 
 const timerId = setInterval(() => {
-  timeLeft--;
+  timeLeft += 1;
   if (timeLeft <= 0) {
     clearInterval(timerId);
-    // location.reload();
+    location.reload();
   }
 }, 1000); // Run the timer function every 1 second (1000 milliseconds)
 
@@ -119,7 +119,7 @@ let score = 0; // initialize the score to zero
 let coins = 0; // initialize the number of coins collected to zero
 
 function drawScore() {
-  context.font = "bold 20px Arial";
+  context.font = "bold 28px Arial";
   context.fillStyle = "white";
 
   // Draw "Score" text
@@ -129,10 +129,10 @@ function drawScore() {
   context.fillText("Coins", 150, 40);
 
   // Draw score and coins values beneath the words
-  context.font = "20px Arial";
+  context.font = "28px Arial";
   context.fillStyle = "yellow";
-  context.fillText(score.toString(), 45, 60);
-  context.fillText(coins.toString(), 175, 60);
+  context.fillText(score.toString(), 55, 70);
+  context.fillText(coins.toString(), 185, 70);
 }
 
 function collectCoin() {
@@ -162,7 +162,7 @@ async function resetMap() {
     new Platform(context, canvas, {x: platformImage.width * 2 + 200, y: 460, image: platformImage}),
     new Platform(context, canvas, {x: platformImage.width * 3 + 380, y: 460, image: platformImage}),
     new Platform(context, canvas, {x: platformImage.width * 4 + 380, y: 460, image: platformImage}),
-    new Platform(context, canvas, {x: platformImage.width * 5 + 810, y: 460, image: platformImage})
+    new Platform(context, canvas, {x: platformImage.width * 5 + 780, y: 460, image: platformImage})
   ];
   
   backgroundImage = await createImageAsync(backgroundImg);
