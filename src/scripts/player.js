@@ -1,6 +1,6 @@
 // player.js
 
-import { resetMap } from "../index.js"
+import { resetMap, drawTimerBar, drawScore, collectCoin, updateScore } from "../index.js"
 import Enemy from "./enemy.js"
 
 
@@ -12,7 +12,7 @@ class Player {
 
     this.position = { x: 0, y: 300 }
     this.velocity = { x: 0, y: 0 }
-    this.speed = 3
+    this.speed = 8
 
     this.width = 66
     this.height = 150
@@ -152,6 +152,9 @@ class Player {
     if (this.position.y + this.height + this.velocity.y <= this.canvas.height) {
       this.velocity.y += gravity;
     } 
+
+    drawTimerBar()
+    drawScore()
   }
 
   animate() {
@@ -298,8 +301,8 @@ class Player {
     const heartPadding = 20;
     const heartX = this.canvas.width - this.lives * (heartWidth + heartPadding);
     const heartY = 10;
-    const text = "Lives:";
-    const textX = heartX - 80; // adjust the x position as needed
+    const text = "Lives";
+    const textX = heartX + 40; // adjust the x position as needed
     const textY = heartY + 22;
     
     // Draw the text
@@ -312,7 +315,7 @@ class Player {
       this.context.drawImage(
         this.sprites.heart.full,
         heartX + i * (heartWidth + heartPadding),
-        heartY,
+        heartY + 35,
         heartWidth,
         heartWidth
       );
@@ -320,8 +323,8 @@ class Player {
   }
 
   resetEnemy() {
-    let enemies = [new Enemy(this.context, this.canvas, {position: {x: 1400, y: 100}, velocity: {x: 3, y: 0}, distance: {limit: 200, traveled: 0}}),
-      new Enemy(this.context, this.canvas, {position: {x: 2500, y: 100}, velocity: {x: 3.5, y: 0}, distance: {limit: 200, traveled: 0}})];
+    let enemies = [  new Enemy( context, canvas,{position: {x: 1200, y: 100}, velocity: {x: 3, y: 0}, distance: {limit: 400, traveled: 0}} ),
+      new Enemy( context, canvas, {position: {x: 2300, y: 100}, velocity: {x: 3.5, y: 0}, distance: {limit: 300, traveled: 0}})];
     return enemies
   }
 
@@ -340,20 +343,20 @@ class Player {
     this.velocity = { x: 0, y: 0 }
   
     // Add restart button
-    const restartBtn = document.createElement("button");
-    restartBtn.innerText = "Restart";
-    restartBtn.style.position = "absolute";
-    restartBtn.style.bottom = "350px";
-    restartBtn.style.left = "50%";
-    restartBtn.style.transform = "translateX(-50%)";
-    restartBtn.style.fontSize = "24px";
-    restartBtn.style.padding = "12px 24px";
-    restartBtn.style.cursor = "pointer";
-    restartBtn.style.zIndex = "9999";
-    restartBtn.addEventListener("click", function() {
-      window.location.reload();
-    });
-    document.body.appendChild(restartBtn);
+    // const restartBtn = document.createElement("button");
+    // restartBtn.innerText = "Restart";
+    // restartBtn.style.position = "absolute";
+    // restartBtn.style.bottom = "350px";
+    // restartBtn.style.left = "50%";
+    // restartBtn.style.transform = "translateX(-50%)";
+    // restartBtn.style.fontSize = "24px";
+    // restartBtn.style.padding = "12px 24px";
+    // restartBtn.style.cursor = "pointer";
+    // restartBtn.style.zIndex = "9999";
+    // restartBtn.addEventListener("click", function() {
+    //   window.location.reload();
+    // });
+    // document.body.appendChild(restartBtn);
   }
 
   gameWin() {
@@ -372,20 +375,20 @@ class Player {
     this.velocity = { x: 0, y: 0 }
   
     // Add restart button
-    const restartBtn = document.createElement("button");
-    restartBtn.innerText = "Restart";
-    restartBtn.style.position = "absolute";
-    restartBtn.style.bottom = "350px";
-    restartBtn.style.left = "50%";
-    restartBtn.style.transform = "translateX(-50%)";
-    restartBtn.style.fontSize = "24px";
-    restartBtn.style.padding = "12px 24px";
-    restartBtn.style.cursor = "pointer";
-    restartBtn.style.zIndex = "9999";
-    document.body.appendChild(restartBtn);
-    restartBtn.addEventListener("click", () => {
-      location.reload();
-    });
+    // const restartBtn = document.createElement("button");
+    // restartBtn.innerText = "Restart";
+    // restartBtn.style.position = "absolute";
+    // restartBtn.style.bottom = "350px";
+    // restartBtn.style.left = "50%";
+    // restartBtn.style.transform = "translateX(-50%)";
+    // restartBtn.style.fontSize = "24px";
+    // restartBtn.style.padding = "12px 24px";
+    // restartBtn.style.cursor = "pointer";
+    // restartBtn.style.zIndex = "9999";
+    // document.body.appendChild(restartBtn);
+    // restartBtn.addEventListener("click", () => {
+    //   location.reload();
+    // });
   }
   
   

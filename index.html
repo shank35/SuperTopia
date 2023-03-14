@@ -12,6 +12,28 @@
 
   <body>
       <canvas id="canvas" type="module"></canvas>
+      <div>
+        <h1>SuperTopia</h1>
+        <h3>Enjoy the game!</h2>
+        <p>Use W, A, S, D keys to move player</p>
+      </div>
+      <script>
+        // Add restart button
+        const restartBtn = document.createElement("button");
+        restartBtn.innerText = "Restart";
+        restartBtn.style.position = "absolute";
+        restartBtn.style.bottom = "90px";
+        restartBtn.style.left = "50%";
+        restartBtn.style.transform = "translateX(-50%)";
+        restartBtn.style.fontSize = "24px";
+        restartBtn.style.padding = "12px 24px";
+        restartBtn.style.cursor = "pointer";
+        restartBtn.style.zIndex = "9999";
+        document.body.appendChild(restartBtn);
+        restartBtn.addEventListener("click", () => {
+          location.reload();
+        });
+      </script>
   </body>
 
 </html>
