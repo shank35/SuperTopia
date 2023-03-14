@@ -324,7 +324,7 @@ class Player {
 
   resetEnemy() {
     let enemies = [  new Enemy( context, canvas,{position: {x: 1200, y: 100}, velocity: {x: 3, y: 0}, distance: {limit: 400, traveled: 0}} ),
-      new Enemy( context, canvas, {position: {x: 2300, y: 100}, velocity: {x: 3.5, y: 0}, distance: {limit: 300, traveled: 0}})];
+      new Enemy( context, canvas, {position: {x: 2300, y: 100}, velocity: {x: 3.5, y: 0}, distance: {limit: 300, traveled: 0}} )];
     return enemies
   }
 
