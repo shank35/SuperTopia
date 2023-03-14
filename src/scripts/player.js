@@ -2,6 +2,7 @@
 
 import { resetMap, drawTimerBar, drawScore, collectCoin, updateScore } from "../index.js"
 import Enemy from "./enemy.js"
+// import {fireworks} from "./fireworks.js"
 
 
 const gravity = 1.2;
@@ -10,7 +11,7 @@ class Player {
 
   constructor(context, canvas, platforms, backgrounds, sprites, enemies) {
 
-    this.position = { x: 0, y: 150 }
+    this.position = { x: 0, y: 250 }
     this.velocity = { x: 0, y: 0 }
     this.speed = 10
 
@@ -31,7 +32,7 @@ class Player {
 
     this.sprites = sprites
     this.currentSprite = this.sprites.stand.right
-    this.currentCropWidth = 177
+    this.currentCropWidth = this.sprites.cropWidth
 
     this.enemies = enemies
 
@@ -264,7 +265,8 @@ class Player {
     
     // win condition
     if (this.traveledCount > 4860) {
-      this.gameWin()
+      this.gameWon();
+      // fireworks.start();
     }
 
   }
@@ -358,25 +360,24 @@ class Player {
     this.velocity = { x: 0, y: 0 }
   }
 
-  gameWin() {
+  gameWon() {
     // Display game over screen
-    this.context.fillStyle = "black";
-    this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
-    this.context.fillStyle = "white";
-    // this.context.fillStyle = "rgba(0, 0, 0, 0.5)";
+    // this.context.fillStyle = "black";
     // this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
-    // this.context.fillStyle = "rgba(255, 255, 255, 0.5)";  
+    // this.context.fillStyle = "white";
+    this.context.fillStyle = "rgba(0, 0, 0, 0.5)";
+    this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    this.context.fillStyle = "rgba(255, 255, 255, 0.5)";  
     this.context.font = "50px Arial";
     this.context.textAlign = "center";
     this.context.fillText("You won!!!", this.canvas.width / 2, this.canvas.height / 2);
   
     // Disable player movement
     this.removeEventListeners()
-    this.position = { x: 0, y: 300 }
+    this.position = { x: 3000, y: 250 }
     this.velocity = { x: 0, y: 0 }
+
   }
-  
-  
 
 }
 

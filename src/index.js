@@ -3,17 +3,18 @@ import platform from "./img/platform.png"
 import smallPlatform from "./img/smallPlatform.png"
 import smallPlatform2 from "./img/smallPlatform2.png"
 
-import backgroundImg from "./img/background8.png"
+import backgroundImg from "./img/greenSpace.png"
+import backgroundImg2 from "./img/greenSpaceF.png"
 import objectImg from "./img/object.png"
 import objectImg2 from "./img/object2.png"
 import Background from "./scripts/background";
 
-import spriteRunLeft from "./img/spriteRunLeft.png"
-import spriteRunRight from "./img/spriteRunRight.png"
-import spriteStandLeft from "./img/spriteStandLeft.png"
-import spriteStandRight from "./img/spriteStandRight.png"
-import spriteJumpRight from "./img/spriteJumpRight.png"
-import spriteJumpLeft from "./img/spriteJumpLeft.png"
+import spriteRunLeft from "./img/spriteFireFlowerRunLeft.png"
+import spriteRunRight from "./img/spriteFireFlowerRunRight.png"
+import spriteStandLeft from "./img/spriteFireFlowerStandLeft.png"
+import spriteStandRight from "./img/spriteFireFlowerStandRight.png"
+import spriteJumpRight from "./img/spriteFireFlowerJumpRight.png"
+import spriteJumpLeft from "./img/spriteFireFlowerJumpLeft.png"
 
 import fullHeart from "./img/fullHeart.png"
 
@@ -51,6 +52,7 @@ let smallPlatformImage
 let smallPlatforms = [];
 
 let backgroundImage
+let backgroundImage2
 let objectImage
 let objectImage2
 
@@ -58,8 +60,8 @@ let backgrounds = [];
 
 
 let enemies = [
-  new Enemy( context, canvas,{position: {x: 1400, y: 100}, velocity: {x: 3, y: 0}, distance: {limit: 300, traveled: 0}} ),
-  new Enemy( context, canvas, {position: {x: 2500, y: 100}, velocity: {x: 3.5, y: 0}, distance: {limit: 200, traveled: 0}} )
+  new Enemy( context, canvas,{position: {x: 1200, y: 100}, velocity: {x: 3, y: 0}, distance: {limit: 400, traveled: 0}} ),
+  new Enemy( context, canvas, {position: {x: 2300, y: 100}, velocity: {x: 3.5, y: 0}, distance: {limit: 300, traveled: 0}} )
 ]
 
 let sprites = {
@@ -109,7 +111,7 @@ const timerId = setInterval(() => {
   timeLeft--;
   if (timeLeft <= 0) {
     clearInterval(timerId);
-    // Game over code here
+    // location.reload();
   }
 }, 1000); // Run the timer function every 1 second (1000 milliseconds)
 
@@ -164,22 +166,25 @@ async function resetMap() {
   ];
   
   backgroundImage = await createImageAsync(backgroundImg);
+  backgroundImage2 = await createImageAsync(backgroundImg2);
   objectImage = await createImageAsync(objectImg);
   objectImage2 = await createImageAsync(objectImg2);
   
   backgrounds = [
     new Background(context, canvas, { x: 0, y: -98, image: backgroundImage }),
-    new Background(context, canvas, { x: 1200, y: -98, image: backgroundImage }),
-    new Background(context, canvas, { x: 2400, y: -98, image: backgroundImage }),
-    new Background(context, canvas, { x: 3600, y: -98, image: backgroundImage }),
-    new Background(context, canvas, { x: 4800, y: -98, image: backgroundImage }),
-    new Background(context, canvas, { x: 6200, y: -98, image: backgroundImage }),
+    new Background(context, canvas, { x: 1006, y: -98, image: backgroundImage2 }),
+    new Background(context, canvas, { x: 2006, y: -89, image: backgroundImage }),
+    new Background(context, canvas, { x: 3006, y: -98, image: backgroundImage2 }),
+    new Background(context, canvas, { x: 4006, y: -98, image: backgroundImage }),
+    new Background(context, canvas, { x: 5006, y: -98, image: backgroundImage2 }),
     // new Background(context, canvas, { x: -100, y: -70, image: objectImage }),
+    new Background(context, canvas, { x: 1600, y: -70, image: objectImage }),
+    new Background(context, canvas, { x: 3600, y: -70, image: objectImage }),
     // new Background(context, canvas, { x: 300, y: -30, image: objectImage2 })
   ];
 
   player.reset();
-  player.position = { x: 0, y: 300 }; 
+  player.position = { x: 0, y: 250 }; 
   player.platforms = platforms;
   player.backgrounds = backgrounds;
   enemies.forEach(ele => {
