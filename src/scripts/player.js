@@ -12,7 +12,7 @@ class Player {
 
     this.position = { x: 0, y: 300 }
     this.velocity = { x: 0, y: 0 }
-    this.speed = 10
+    this.speed = 3
 
     this.width = 66
     this.height = 150
@@ -298,6 +298,16 @@ class Player {
     const heartPadding = 20;
     const heartX = this.canvas.width - this.lives * (heartWidth + heartPadding);
     const heartY = 10;
+    const text = "Lives:";
+    const textX = heartX - 80; // adjust the x position as needed
+    const textY = heartY + 22;
+    
+    // Draw the text
+    this.context.fillStyle = "#ffffff";
+    this.context.font = "bold 24px sans-serif";
+    this.context.fillText(text, textX, textY);
+    
+    // Draw the hearts
     for (let i = 0; i < this.lives; i++) {
       this.context.drawImage(
         this.sprites.heart.full,
@@ -310,8 +320,8 @@ class Player {
   }
 
   resetEnemy() {
-    let enemies = [new Enemy(this.context, this.canvas, {position: {x: 1400, y: 100}, velocity: {x: 4, y: 0}, distance: {limit: 200, traveled: 0}}),
-      new Enemy(this.context, this.canvas, {position: {x: 2500, y: 100}, velocity: {x: 4, y: 0}, distance: {limit: 200, traveled: 0}})];
+    let enemies = [new Enemy(this.context, this.canvas, {position: {x: 1400, y: 100}, velocity: {x: 3, y: 0}, distance: {limit: 200, traveled: 0}}),
+      new Enemy(this.context, this.canvas, {position: {x: 2500, y: 100}, velocity: {x: 3.5, y: 0}, distance: {limit: 200, traveled: 0}})];
     return enemies
   }
 

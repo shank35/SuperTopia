@@ -55,8 +55,8 @@ let objectImage2
 let backgrounds = [];
 
 let enemies = [
-  new Enemy( context, canvas, {position: {x: 1400, y: 100}, velocity: {x: 4, y: 0}, distance: {limit: 300, traveled: 0}} ),
-  new Enemy( context, canvas, {position: {x: 2500, y: 100}, velocity: {x: 4, y: 0}, distance: {limit: 200, traveled: 0}} )
+  new Enemy( context, canvas, {position: {x: 1400, y: 100}, velocity: {x: 3, y: 0}, distance: {limit: 300, traveled: 0}} ),
+  new Enemy( context, canvas, {position: {x: 2500, y: 100}, velocity: {x: 3.5, y: 0}, distance: {limit: 200, traveled: 0}} )
 ]
 
 let sprites = {
