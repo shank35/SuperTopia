@@ -1,6 +1,8 @@
 // player.js
 
 import { resetMap } from "../index.js"
+import Enemy from "./enemy.js"
+
 
 const gravity = 1.2;
 
@@ -8,7 +10,7 @@ class Player {
 
   constructor(context, canvas, platforms, backgrounds, sprites, enemies) {
 
-    this.position = { x: 100, y: 100 }
+    this.position = { x: 0, y: 300 }
     this.velocity = { x: 0, y: 0 }
     this.speed = 10
 
@@ -31,6 +33,8 @@ class Player {
 
     this.traveledCount = 0;
 
+    this.lives = 3
+
     this.currentKey = ""
 
     this.keys = {
@@ -42,54 +46,71 @@ class Player {
       }
     }
 
-    window.addEventListener("keydown", ({keyCode}) => {
-      switch (keyCode) {
-        case 65:
-          console.log("left")
-          this.keys.left.pressed = true
-          this.currentKey = "left"
-          break
-        case 83:
-          console.log("down")
-          break
-        case 68:
-          console.log("right")
-          this.keys.right.pressed = true
-          this.currentKey = "right"
-          break
-        case 87:
-          console.log("up")
-          if (this.velocity.y === 0) {
-            this.velocity.y -= 20
-          }
-          break
-      }
-    });
+    this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.handleKeyUp = this.handleKeyUp.bind(this);
 
-    window.addEventListener("keyup", ({keyCode}) => {
-      switch (keyCode) {
-        case 65:
-          console.log("left")
-          this.keys.left.pressed = false
-          break
-        case 83:
-          console.log("down")
-          break
-        case 68:
-          console.log("right")
-          this.keys.right.pressed = false
-          break
-        case 87:
-          console.log("up")
-          break
-      }
-    });
+    window.addEventListener("keydown", this.handleKeyDown);
+    window.addEventListener("keyup", this.handleKeyUp);
 
+  }
+
+
+  handleKeyDown({ keyCode }) {
+    switch (keyCode) {
+      case 65:
+        console.log("left")
+        this.keys.left.pressed = true
+        this.currentKey = "left"
+        break
+      case 83:
+        console.log("down")
+        break
+      case 68:
+        console.log("right")
+        this.keys.right.pressed = true
+        this.currentKey = "right"
+        break
+      case 87:
+        console.log("up")
+        if (this.velocity.y === 0) {
+          this.velocity.y -= 20
+        }
+        break
+    }
+  }
+
+  handleKeyUp({ keyCode }) {
+    switch (keyCode) {
+      case 65:
+        console.log("left")
+        this.keys.left.pressed = false
+        break
+      case 83:
+        console.log("down")
+        break
+      case 68:
+        console.log("right")
+        this.keys.right.pressed = false
+        break
+      case 87:
+        console.log("up")
+        break
+    }
+  }
+
+  removeEventListeners() {
+    window.removeEventListener("keydown", this.handleKeyDown);
+    window.removeEventListener("keyup", this.handleKeyUp);
   }
 
   reset() {
     this.traveledCount = 0;
   }
+
+  resetHearts() {
+    this.lives = 3
+  }
+  
 
   collisionDetection ({object, platform}) {
     return (object.position.y + object.height <= 
@@ -110,24 +131,21 @@ class Player {
   }
 
   draw() {
-    // this.context.drawImage(this.currentSprite,
-    // this.currentCropWidth * this.frames,
-    // 0,
-    // this.currentCropWidth,
-    // 400,
-    // this.position.x, this.position.y, this.width, this.height)
-    this.context.fillStyle = 'red';
-    
-    this.context.fillRect(this.position.x, this.position.y, this.width, this.height);
+    this.context.drawImage(this.currentSprite,
+    this.currentCropWidth * this.frames,
+    0,
+    this.currentCropWidth,
+    400,
+    this.position.x, this.position.y, this.width, this.height)
   }
 
   update () {
-    // this.frames += 1
-    // if (this.frames > 59 && (this.currentSprite === this.sprites.stand.right || this.currentSprite === this.sprites.stand.left)) {
-    //   this.frames = 0
-    // } else if (this.frames > 29 && (this.currentSprite === this.sprites.run.right || this.currentSprite === this.sprites.run.left )) {
-    //   this.frames = 0
-    // }
+    this.frames += 1
+    if (this.frames > 59 && (this.currentSprite === this.sprites.stand.right || this.currentSprite === this.sprites.stand.left)) {
+      this.frames = 0
+    } else if (this.frames > 29 && (this.currentSprite === this.sprites.run.right || this.currentSprite === this.sprites.run.left )) {
+      this.frames = 0
+    }
     this.position.y += this.velocity.y
     this.position.x += this.velocity.x
     this.draw();
@@ -149,25 +167,10 @@ class Player {
       platform.draw();
     })
 
-    this.enemies.forEach((enemy, index) => {
-      enemy.update()
-      if (
-        this.enemyCollisionTop({
-        object1: this,
-        object2: enemy
-        })) {
-          this.velocity.y -= 35
-          setTimeout(() => {
-            this.enemies.splice(index, 1)
-          }, 0)
-        } else if (
-          this.position.x + this.width >= enemy.position.x && this.position.y + this.height >= enemy.position.y && this.position.x <= enemy.position.x + enemy.width
-        ) {
-          resetMap()
-        }
-    })
-
     this.update();
+    this.enemyCollision();
+    this.fallOffScreen();
+    this.drawHearts();
 
     if (this.keys.right.pressed && this.position.x < 400) {
       this.velocity.x = this.speed
@@ -237,20 +240,148 @@ class Player {
       this.width = this.sprites.stand.width
     }
 
+    if (this.lives === 0) {
+      this.gameOver()
+    }
     
     // win condition
     if (this.traveledCount > 4860) {
-      console.log("YOU WIN")
-    }
-
-    // lose condition
-    if (this.position.y > this.canvas.height) {
-      resetMap()
+      this.gameWin()
     }
 
   }
 
+  enemyCollision() {
+    this.enemies.forEach((enemy, index) => {
+      enemy.update()
+      if (
+        this.enemyCollisionTop({
+        object1: this,
+        object2: enemy
+        })) {
+          this.velocity.y -= 35
+          setTimeout(() => {
+            this.enemies.splice(index, 1)
+          }, 0)
+        } else if (
+          this.position.x + this.width >= enemy.position.x && this.position.y + this.height >= enemy.position.y && this.position.x <= enemy.position.x + enemy.width
+        ) {
+          this.lives -= 1
+          if (this.lives === 0) {
+            this.gameOver();
+          } else {
+            this.reset()
+            this.enemies = this.resetEnemy()
+            resetMap()
+          }
+        }
+    })
+  }
+
+  // falling into death pit
+  fallOffScreen() {
+    if (this.position.y > this.canvas.height) {
+      this.lives -= 1
+      if (this.lives === 0) {
+        this.gameOver();
+      } else {
+        this.reset()
+        this.enemies = this.resetEnemy()
+        resetMap()
+      }
+    }
+  }
+
+  // drawing hearts
+  drawHearts() {
+    const heartWidth = 34;
+    const heartPadding = 20;
+    const heartX = this.canvas.width - this.lives * (heartWidth + heartPadding);
+    const heartY = 10;
+    for (let i = 0; i < this.lives; i++) {
+      this.context.drawImage(
+        this.sprites.heart.full,
+        heartX + i * (heartWidth + heartPadding),
+        heartY,
+        heartWidth,
+        heartWidth
+      );
+    }
+  }
+
+  resetEnemy() {
+    let enemies = [new Enemy(this.context, this.canvas, {position: {x: 1400, y: 100}, velocity: {x: 4, y: 0}, distance: {limit: 200, traveled: 0}}),
+      new Enemy(this.context, this.canvas, {position: {x: 2500, y: 100}, velocity: {x: 4, y: 0}, distance: {limit: 200, traveled: 0}})];
+    return enemies
+  }
+
+  gameOver() {
+    // Display game over screen
+    this.context.fillStyle = "black";
+    this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    this.context.fillStyle = "white";
+    this.context.font = "50px Arial";
+    this.context.textAlign = "center";
+    this.context.fillText("Game Over", this.canvas.width / 2, this.canvas.height / 2);
+  
+    // Disable player movement
+    this.removeEventListeners()
+    this.position = { x: 0, y: 300 }
+    this.velocity = { x: 0, y: 0 }
+  
+    // Add restart button
+    const restartBtn = document.createElement("button");
+    restartBtn.innerText = "Restart";
+    restartBtn.style.position = "absolute";
+    restartBtn.style.bottom = "350px";
+    restartBtn.style.left = "50%";
+    restartBtn.style.transform = "translateX(-50%)";
+    restartBtn.style.fontSize = "24px";
+    restartBtn.style.padding = "12px 24px";
+    restartBtn.style.cursor = "pointer";
+    restartBtn.style.zIndex = "9999";
+    restartBtn.addEventListener("click", function() {
+      window.location.reload();
+    });
+    document.body.appendChild(restartBtn);
+  }
+
+  gameWin() {
+    // Display game over screen
+    console.log("gameWin function called");
+    this.context.fillStyle = "black";
+    this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    this.context.fillStyle = "white";
+    this.context.font = "50px Arial";
+    this.context.textAlign = "center";
+    this.context.fillText("You won!!!", this.canvas.width / 2, this.canvas.height / 2);
+  
+    // Disable player movement
+    this.removeEventListeners()
+    this.position = { x: 0, y: 300 }
+    this.velocity = { x: 0, y: 0 }
+  
+    // Add restart button
+    const restartBtn = document.createElement("button");
+    restartBtn.innerText = "Restart";
+    restartBtn.style.position = "absolute";
+    restartBtn.style.bottom = "350px";
+    restartBtn.style.left = "50%";
+    restartBtn.style.transform = "translateX(-50%)";
+    restartBtn.style.fontSize = "24px";
+    restartBtn.style.padding = "12px 24px";
+    restartBtn.style.cursor = "pointer";
+    restartBtn.style.zIndex = "9999";
+    document.body.appendChild(restartBtn);
+    restartBtn.addEventListener("click", () => {
+      location.reload();
+    });
+  }
+  
+  
+
 }
+
 
 
 export default Player;

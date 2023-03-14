@@ -3,7 +3,7 @@ import platform from "./img/platform.png"
 import smallPlatform from "./img/smallPlatform.png"
 import smallPlatform2 from "./img/smallPlatform2.png"
 
-import backgroundImg from "./img/background3.png"
+import backgroundImg from "./img/background8.png"
 import objectImg from "./img/object.png"
 import objectImg2 from "./img/object2.png"
 import Background from "./scripts/background";
@@ -13,8 +13,10 @@ import spriteRunRight from "./img/spriteRunRight.png"
 import spriteStandLeft from "./img/spriteStandLeft.png"
 import spriteStandRight from "./img/spriteStandRight.png"
 
+import fullHeart from "./img/fullHeart.png"
+
 import Player from "./scripts/player";
-import Enemy from "./scripts/Enemy";
+import Enemy from "./scripts/enemy";
 import Platform from "./scripts/terrain";
 
 const canvas = document.getElementById("canvas");
@@ -53,8 +55,8 @@ let objectImage2
 let backgrounds = [];
 
 let enemies = [
-  new Enemy( context, canvas, {position: {x: 1400, y: 100}, velocity: {x: -0.3, y: 0}, distance: {limit: 200, traveled: 0}} ),
-  new Enemy( context, canvas, {position: {x: 2500, y: 100}, velocity: {x: -0.3, y: 0}, distance: {limit: 200, traveled: 0}} )
+  new Enemy( context, canvas, {position: {x: 1400, y: 100}, velocity: {x: 4, y: 0}, distance: {limit: 300, traveled: 0}} ),
+  new Enemy( context, canvas, {position: {x: 2500, y: 100}, velocity: {x: 4, y: 0}, distance: {limit: 200, traveled: 0}} )
 ]
 
 let sprites = {
@@ -69,6 +71,9 @@ let sprites = {
     left: createImage(spriteRunLeft),
     cropWidth: 341,
     width: 127.875
+  },
+  heart: {
+    full: createImage(fullHeart),
   }
 }
 
@@ -94,23 +99,25 @@ async function resetMap() {
   objectImage2 = await createImageAsync(objectImg2);
   
   backgrounds = [
-    new Background(context, canvas, { x: 0, y: 0, image: backgroundImage }),
-    new Background(context, canvas, { x: 1000, y: 0, image: backgroundImage }),
-    new Background(context, canvas, { x: 2000, y: 0, image: backgroundImage }),
-    new Background(context, canvas, { x: 3000, y: 0, image: backgroundImage }),
-    new Background(context, canvas, { x: 4000, y: 0, image: backgroundImage }),
-    new Background(context, canvas, { x: 5000, y: 0, image: backgroundImage }),
-    new Background(context, canvas, { x: -100, y: -70, image: objectImage }),
-    new Background(context, canvas, { x: 300, y: -30, image: objectImage2 })
+    new Background(context, canvas, { x: 0, y: -98, image: backgroundImage }),
+    new Background(context, canvas, { x: 1200, y: -98, image: backgroundImage }),
+    new Background(context, canvas, { x: 2400, y: -98, image: backgroundImage }),
+    new Background(context, canvas, { x: 3600, y: -98, image: backgroundImage }),
+    new Background(context, canvas, { x: 4800, y: -98, image: backgroundImage }),
+    new Background(context, canvas, { x: 6200, y: -98, image: backgroundImage }),
+    // new Background(context, canvas, { x: -100, y: -70, image: objectImage }),
+    // new Background(context, canvas, { x: 300, y: -30, image: objectImage2 })
   ];
 
   player.reset();
-  player.position = { x: 100, y: 100 }; 
+  player.position = { x: 0, y: 280 }; 
   player.platforms = platforms;
   player.backgrounds = backgrounds;
-  enemies.forEach(enemy => {
-    enemy.reset();
+  enemies.forEach(ele => {
+    ele.reset();
   });
+
+
 }
 
 

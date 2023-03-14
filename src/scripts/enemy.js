@@ -47,6 +47,7 @@ class Enemy {
   }
 
   reset() {
+    this.update()
     this.position.x = this.initialPositionX
     this.position.y = this.initialPositionY
     this.distance.traveled = 0;
