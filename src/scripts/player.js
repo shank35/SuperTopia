@@ -1,6 +1,6 @@
 // player.js
 
-import { resetMap } from "../index.js"
+import { resetMap, drawTimerBar, drawScore, collectCoin, updateScore } from "../index.js"
 import Enemy from "./enemy.js"
 
 
@@ -10,12 +10,18 @@ class Player {
 
   constructor(context, canvas, platforms, backgrounds, sprites, enemies) {
 
-    this.position = { x: 0, y: 300 }
+    this.position = { x: 0, y: 150 }
     this.velocity = { x: 0, y: 0 }
-    this.speed = 3
+    this.speed = 10
+
+    this.scale = 0.3
 
     this.width = 66
     this.height = 150
+
+    // mario sprite
+    // this.width = 398 * this.scale
+    // this.height = 353 * this.scale
 
     this.context = context
     this.canvas = canvas
@@ -74,6 +80,11 @@ class Player {
         console.log("up")
         if (this.velocity.y === 0) {
           this.velocity.y -= 20
+        }
+        if (this.currentKey === "right") {
+          this.currentSprite = this.sprites.jump.right
+        } else {
+          this.currentSprite = this.sprites.jump.left
         }
         break
     }
@@ -137,6 +148,9 @@ class Player {
     this.currentCropWidth,
     400,
     this.position.x, this.position.y, this.width, this.height)
+
+    drawTimerBar();
+    drawScore();
   }
 
   update () {
@@ -144,6 +158,8 @@ class Player {
     if (this.frames > 59 && (this.currentSprite === this.sprites.stand.right || this.currentSprite === this.sprites.stand.left)) {
       this.frames = 0
     } else if (this.frames > 29 && (this.currentSprite === this.sprites.run.right || this.currentSprite === this.sprites.run.left )) {
+      this.frames = 0
+    } else if (this.currentSprite === this.sprites.jump.right || this.currentSprite === this.sprites.jump.left) {
       this.frames = 0
     }
     this.position.y += this.velocity.y
@@ -221,23 +237,25 @@ class Player {
     })
 
     // sprite switching
-    if (this.keys.right.pressed && this.currentKey === "right" && this.currentSprite !== this.sprites.run.right) {
-      this.frames = 1
-      this.currentSprite = this.sprites.run.right
-      this.currentCropWidth = this.sprites.run.cropWidth
-      this.width = this.sprites.run.width
-    } else if (this.keys.left.pressed && this.currentKey === "left" && this.currentSprite !== this.sprites.run.left) {
-      this.currentSprite = this.sprites.run.left
-      this.currentCropWidth = this.sprites.run.cropWidth
-      this.width = this.sprites.run.width
-    } else if (!this.keys.left.pressed && this.currentKey === "left" && this.currentSprite !== this.sprites.stand.left) {
-      this.currentSprite = this.sprites.stand.left
-      this.currentCropWidth = this.sprites.stand.cropWidth
-      this.width = this.sprites.stand.width
-    } else if (!this.keys.right.pressed && this.currentKey === "right" && this.currentSprite !== this.sprites.stand.right) {
-      this.currentSprite = this.sprites.stand.right
-      this.currentCropWidth = this.sprites.stand.cropWidth
-      this.width = this.sprites.stand.width
+    if (this.velocity.y === 0) {
+      if (this.keys.right.pressed && this.currentKey === "right" && this.currentSprite !== this.sprites.run.right) {
+        this.frames = 1
+        this.currentSprite = this.sprites.run.right
+        this.currentCropWidth = this.sprites.run.cropWidth
+        this.width = this.sprites.run.width
+      } else if (this.keys.left.pressed && this.currentKey === "left" && this.currentSprite !== this.sprites.run.left) {
+        this.currentSprite = this.sprites.run.left
+        this.currentCropWidth = this.sprites.run.cropWidth
+        this.width = this.sprites.run.width
+      } else if (!this.keys.left.pressed && this.currentKey === "left" && this.currentSprite !== this.sprites.stand.left) {
+        this.currentSprite = this.sprites.stand.left
+        this.currentCropWidth = this.sprites.stand.cropWidth
+        this.width = this.sprites.stand.width
+      } else if (!this.keys.right.pressed && this.currentKey === "right" && this.currentSprite !== this.sprites.stand.right) {
+        this.currentSprite = this.sprites.stand.right
+        this.currentCropWidth = this.sprites.stand.cropWidth
+        this.width = this.sprites.stand.width
+      }
     }
 
     if (this.lives === 0) {
@@ -338,30 +356,16 @@ class Player {
     this.removeEventListeners()
     this.position = { x: 0, y: 300 }
     this.velocity = { x: 0, y: 0 }
-  
-    // Add restart button
-    const restartBtn = document.createElement("button");
-    restartBtn.innerText = "Restart";
-    restartBtn.style.position = "absolute";
-    restartBtn.style.bottom = "350px";
-    restartBtn.style.left = "50%";
-    restartBtn.style.transform = "translateX(-50%)";
-    restartBtn.style.fontSize = "24px";
-    restartBtn.style.padding = "12px 24px";
-    restartBtn.style.cursor = "pointer";
-    restartBtn.style.zIndex = "9999";
-    restartBtn.addEventListener("click", function() {
-      window.location.reload();
-    });
-    document.body.appendChild(restartBtn);
   }
 
   gameWin() {
     // Display game over screen
-    console.log("gameWin function called");
     this.context.fillStyle = "black";
     this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
     this.context.fillStyle = "white";
+    // this.context.fillStyle = "rgba(0, 0, 0, 0.5)";
+    // this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    // this.context.fillStyle = "rgba(255, 255, 255, 0.5)";  
     this.context.font = "50px Arial";
     this.context.textAlign = "center";
     this.context.fillText("You won!!!", this.canvas.width / 2, this.canvas.height / 2);
@@ -370,22 +374,6 @@ class Player {
     this.removeEventListeners()
     this.position = { x: 0, y: 300 }
     this.velocity = { x: 0, y: 0 }
-  
-    // Add restart button
-    const restartBtn = document.createElement("button");
-    restartBtn.innerText = "Restart";
-    restartBtn.style.position = "absolute";
-    restartBtn.style.bottom = "350px";
-    restartBtn.style.left = "50%";
-    restartBtn.style.transform = "translateX(-50%)";
-    restartBtn.style.fontSize = "24px";
-    restartBtn.style.padding = "12px 24px";
-    restartBtn.style.cursor = "pointer";
-    restartBtn.style.zIndex = "9999";
-    document.body.appendChild(restartBtn);
-    restartBtn.addEventListener("click", () => {
-      location.reload();
-    });
   }
   
   

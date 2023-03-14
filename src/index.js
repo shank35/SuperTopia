@@ -12,6 +12,8 @@ import spriteRunLeft from "./img/spriteRunLeft.png"
 import spriteRunRight from "./img/spriteRunRight.png"
 import spriteStandLeft from "./img/spriteStandLeft.png"
 import spriteStandRight from "./img/spriteStandRight.png"
+import spriteJumpRight from "./img/spriteJumpRight.png"
+import spriteJumpLeft from "./img/spriteJumpLeft.png"
 
 import fullHeart from "./img/fullHeart.png"
 
@@ -54,8 +56,9 @@ let objectImage2
 
 let backgrounds = [];
 
+
 let enemies = [
-  new Enemy( context, canvas, {position: {x: 1400, y: 100}, velocity: {x: 3, y: 0}, distance: {limit: 300, traveled: 0}} ),
+  new Enemy( context, canvas,{position: {x: 1400, y: 100}, velocity: {x: 3, y: 0}, distance: {limit: 300, traveled: 0}} ),
   new Enemy( context, canvas, {position: {x: 2500, y: 100}, velocity: {x: 3.5, y: 0}, distance: {limit: 200, traveled: 0}} )
 ]
 
@@ -72,10 +75,76 @@ let sprites = {
     cropWidth: 341,
     width: 127.875
   },
+  jump: {
+    right: createImage(spriteJumpRight),
+    left: createImage(spriteJumpLeft),
+    cropWidth: 341,
+    width: 127.875
+  },
   heart: {
     full: createImage(fullHeart),
   }
 }
+
+let timeLeft = 400; // set the total time limit of the game
+
+function drawTimerBar() {
+  context.fillStyle = "black";
+  const barWidth = 220; // Set the width of the timer bar
+  const barHeight = 40; // Set the height of the timer bar
+  const barX = (canvas.width - barWidth) / 2; // Calculate the x position of the timer bar
+  const barY = 30; // Set the y position of the timer bar
+  context.fillRect(barX, 15, barWidth, barHeight); // Draw a black bar
+
+  let timerWidth = (timeLeft / 400) * barWidth; // Calculate the width of the timer bar
+  context.fillStyle = "red";
+  context.fillRect(barX, 15, timerWidth, barHeight); // Draw the timer bar
+  
+  context.fillStyle = "white";
+  context.font = "30px Arial";
+  context.fillText(`Time Left: ${timeLeft}`, barX + 10, barY + 15); // Display the time left on the timer bar
+}
+
+const timerId = setInterval(() => {
+  timeLeft--;
+  if (timeLeft <= 0) {
+    clearInterval(timerId);
+    // Game over code here
+  }
+}, 1000); // Run the timer function every 1 second (1000 milliseconds)
+
+let score = 0; // initialize the score to zero
+let coins = 0; // initialize the number of coins collected to zero
+
+function drawScore() {
+  context.font = "bold 20px Arial";
+  context.fillStyle = "white";
+
+  // Draw "Score" text
+  context.fillText("Score", 20, 40);
+
+  // Draw "Coins" text
+  context.fillText("Coins", 150, 40);
+
+  // Draw score and coins values beneath the words
+  context.font = "20px Arial";
+  context.fillStyle = "yellow";
+  context.fillText(score.toString(), 45, 60);
+  context.fillText(coins.toString(), 175, 60);
+}
+
+function collectCoin() {
+  coins++; // increment the number of coins collected
+  score += 100; // add 100 to the score for collecting a coin
+}
+
+function updateScore() {
+  // update the score based on game logic
+  // ...
+
+  drawScore(); // redraw the score display
+}
+
 
 const player = new Player(context, canvas, platforms, backgrounds, sprites, enemies);
 
@@ -110,20 +179,17 @@ async function resetMap() {
   ];
 
   player.reset();
-  player.position = { x: 0, y: 280 }; 
+  player.position = { x: 0, y: 300 }; 
   player.platforms = platforms;
   player.backgrounds = backgrounds;
   enemies.forEach(ele => {
     ele.reset();
   });
-
-
 }
-
 
 document.addEventListener("DOMContentLoaded", () => {
   resetMap();
   player.animate();
 });
 
-export { resetMap };
+export { resetMap, drawTimerBar, drawScore, collectCoin, updateScore };
