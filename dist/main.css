@@ -15,21 +15,7 @@ canvas {
 
 h1 {
   position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translate(-50%);
-}
-
-h3 {
-  position: absolute;
-  bottom: 800px;
-  left: 50%;
-  transform: translate(-50%);
-}
-
-p {
-  position: absolute;
-  bottom: 770px;
+  top: 180px;
   left: 50%;
   transform: translate(-50%);
 }
@@ -44,4 +30,50 @@ p {
   cursor: pointer;
   z-index: 100;
   display: none;
+}
+
+#github {
+  position: absolute;
+  top: 190px;
+  right: 600px;
+}
+
+#linkedin {
+  position: absolute;
+  top: 195px;
+  right: 550px;
+}
+
+#menu {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border: 2px solid #000;
+  border-radius: 5px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  font-size: 24px;
+  width: 1024px;
+  height: 576px;
+}
+
+#menu h2 {
+  margin-top: 0;
+}
+
+#menu button {
+  font-size: 20px;
+  padding: 10px 20px;
+  margin: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #000;
+  color: #fff;
+  cursor: pointer;
+}
+
+#menu button:hover {
+  background-color: #555;
 }

@@ -14,7 +14,7 @@ class Player {
 
     this.position = { x: 0, y: 300 }
     this.velocity = { x: 0, y: 0 }
-    this.speed = 8
+    this.speed = 20
 
     this.width = 66
     this.height = 150
@@ -37,6 +37,9 @@ class Player {
 
     this.lives = 3
 
+    this.gameDone = true
+    this.gameWon = true
+
     this.currentKey = ""
 
     this.keys = {
@@ -53,13 +56,14 @@ class Player {
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleKeyUp = this.handleKeyUp.bind(this);
 
-
-    window.addEventListener("keydown", this.handleKeyDown);
-    window.addEventListener("keyup", this.handleKeyUp);
     this.restartBtn.addEventListener("click", function() {
       window.location.reload();
     });
 
+  }
+
+  setSprite(sprites) {
+    this.sprites = sprites
   }
 
 
@@ -104,6 +108,11 @@ class Player {
         console.log("up")
         break
     }
+  }
+
+  addEventListeners() {
+    window.addEventListener("keydown", this.handleKeyDown);
+    window.addEventListener("keyup", this.handleKeyUp);
   }
 
   removeEventListeners() {
@@ -190,32 +199,36 @@ class Player {
     } else {
       this.velocity.x = 0
 
-      //scrolling
-      if (this.keys.right.pressed) {
-        this.traveledCount += this.speed
-        this.platforms.forEach(platform => {
-          platform.position.x -= this.speed
-        })
-        this.backgrounds.forEach(background => {
-          background.position.x -= this.speed * 0.66
-        })
-        this.enemies.forEach(enemy => {
-          enemy.position.x -= this.speed
-        })
-      } else if (this.keys.left.pressed && this.traveledCount > 0) {
-        this.traveledCount -= this.speed
-        this.platforms.forEach(platform => {
-          platform.position.x += this.speed
-        })
-        this.backgrounds.forEach(background => {
-          background.position.x += this.speed * 0.66
-        })
-        this.enemies.forEach(enemy => {
-          enemy.position.x += this.speed
-        })
-      }
-      
+    //scrolling
+    if (this.keys.right.pressed) {
+      this.traveledCount += this.speed
+      console.log(this.traveledCount)
+
+      this.platforms.forEach(platform => {
+        platform.position.x -= this.speed
+      })
+      this.backgrounds.forEach(background => {
+        background.position.x -= this.speed * 0.66
+      })
+      this.enemies.forEach(enemy => {
+        enemy.position.x -= this.speed
+      })
+    } else if (this.keys.left.pressed && this.traveledCount > 0) {
+      this.traveledCount -= this.speed
+      console.log(this.traveledCount)
+
+      this.platforms.forEach(platform => {
+        platform.position.x += this.speed
+      })
+      this.backgrounds.forEach(background => {
+        background.position.x += this.speed * 0.66
+      })
+      this.enemies.forEach(enemy => {
+        enemy.position.x += this.speed
+      })
     }
+      
+  }
 
     // platform collision detection
     this.platforms.forEach(platform => {
@@ -256,7 +269,7 @@ class Player {
     }
     
     // win condition
-    if (this.traveledCount > 4860) {
+    if (this.traveledCount > 15000) {
       this.gameWin()
     }
 
@@ -316,7 +329,7 @@ class Player {
     // Draw the text
     this.context.fillStyle = "#ffffff";
     this.context.font = "bold 24px sans-serif";
-    this.context.fillText(text, textX, textY);
+    this.context.fillText(text, 900, 35);
     
     // Draw the hearts
     for (let i = 0; i < this.lives; i++) {
@@ -347,58 +360,36 @@ class Player {
   
     // Disable player movement
     this.removeEventListeners()
-    this.position = { x: 0, y: 300 }
-    this.velocity = { x: 0, y: 0 }
+    this.speed = 0
+    this.currentSprite === this.sprites.stand.right
+    this.frames = 0
   
     // Add restart button
-    // const restartBtn = document.createElement("button");
-    // const restartBtn = document.getElementById("btn-restart");
-    // restartBtn.innerText = "Restart";
-    // restartBtn.style.position = "absolute";
-    // restartBtn.style.bottom = "350px";
-    // restartBtn.style.left = "50%";
-    // restartBtn.style.transform = "translateX(-50%)";
-    // restartBtn.style.fontSize = "24px";
-    // restartBtn.style.padding = "12px 24px";
-    // restartBtn.style.cursor = "pointer";
-    // restartBtn.style.zIndex = "9999";
     this.restartBtn.style.display = "block";
-    
-    // document.body.appendChild(restartBtn);
+
   }
 
   gameWin() {
     // Display game over screen
     console.log("gameWin function called");
-    this.context.fillStyle = "black";
-    this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
-    this.context.fillStyle = "white";
+    // this.context.fillStyle = "black";
+    // this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    // this.context.fillStyle = "white";
     this.context.font = "50px Arial";
     this.context.textAlign = "center";
     this.context.fillText("You won!!!", this.canvas.width / 2, this.canvas.height / 2);
   
     // Disable player movement
     this.removeEventListeners()
-    this.position = { x: 0, y: 300 }
-    this.velocity = { x: 0, y: 0 }
+    this.speed = 0
+    this.currentSprite === this.sprites.stand.right
+    this.frames = 0
   
     // Add restart button
     this.restartBtn.style.display = "block";
-    // const restartBtn = document.createElement("button");
-    // restartBtn.innerText = "Restart";
-    // restartBtn.style.position = "absolute";
-    // restartBtn.style.bottom = "350px";
-    // restartBtn.style.left = "50%";
-    // restartBtn.style.transform = "translateX(-50%)";
-    // restartBtn.style.fontSize = "24px";
-    // restartBtn.style.padding = "12px 24px";
-    // restartBtn.style.cursor = "pointer";
-    // restartBtn.style.zIndex = "9999";
-    // document.body.appendChild(restartBtn);
-    // restartBtn.addEventListener("click", () => {
-    //   location.reload();
-    // });
+
   }
+
   
   
 
