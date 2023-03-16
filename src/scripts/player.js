@@ -12,9 +12,10 @@ class Player {
 
   constructor(context, canvas, platforms, backgrounds, sprites, enemies) {
 
+
     this.position = { x: 0, y: 300 }
     this.velocity = { x: 0, y: 0 }
-    this.speed = 20
+    this.speed = 30 //10
 
     this.width = 66
     this.height = 150
@@ -27,7 +28,7 @@ class Player {
 
     this.sprites = sprites
     this.currentSprite = this.sprites.stand.right
-    this.currentCropWidth = 177
+    this.currentCropWidth = this.sprites.cropWidth
 
     this.enemies = enemies
 
@@ -41,6 +42,7 @@ class Player {
     this.gameWon = true
 
     this.currentKey = ""
+
 
     this.keys = {
       right: {
@@ -85,7 +87,12 @@ class Player {
       case 87:
         console.log("up")
         if (this.velocity.y === 0) {
-          this.velocity.y -= 20
+          this.velocity.y -= 30 //20
+        }
+        if (this.currentKey === "right") {
+          this.currentSprite = this.sprites.jump.right
+        } else {
+          this.currentSprite = this.sprites.jump.left
         }
         break
     }
@@ -147,6 +154,24 @@ class Player {
     object1.position.x <= object2.position.x + object2.width)
   }
 
+  hitBottomOfPlatform({ object, platform }) {
+    return (
+      object.position.y <= platform.position.y + platform.height &&
+      object.position.y - object.velocity.y >= platform.position.y + platform.height &&
+      object.position.x + object.width >= platform.position.x &&
+      object.position.x <= platform.position.x + platform.width
+    )
+  }
+
+  hitSideOfPlatform({ object, platform }) {
+    return (
+      object.position.x + object.width + object.velocity.x - platform.velocity.x >= platform.position.x &&
+      object.position.x + object.velocity.x <= platform.position.x + platform.width &&
+      object.position.y <= platform.position.y + platform.height &&
+      object.position.y + object.height >= platform.position.y
+    )
+  }
+
   draw() {
     this.context.drawImage(this.currentSprite,
     this.currentCropWidth * this.frames,
@@ -161,6 +186,8 @@ class Player {
     if (this.frames > 59 && (this.currentSprite === this.sprites.stand.right || this.currentSprite === this.sprites.stand.left)) {
       this.frames = 0
     } else if (this.frames > 29 && (this.currentSprite === this.sprites.run.right || this.currentSprite === this.sprites.run.left )) {
+      this.frames = 0
+    } else if (this.currentSprite === this.sprites.jump.right || this.currentSprite === this.sprites.jump.left) {
       this.frames = 0
     }
     this.position.y += this.velocity.y
@@ -226,6 +253,7 @@ class Player {
       this.enemies.forEach(enemy => {
         enemy.position.x += this.speed
       })
+
     }
       
   }
@@ -242,26 +270,47 @@ class Player {
           enemy.velocity.y = 0;
         }
       })
+      if (
+        platform.block &&
+        this.hitBottomOfPlatform({
+          object: this,
+          platform
+        })
+      ) {
+        this.velocity.y = -this.velocity.y
+      }
+  
+      if (
+        platform.block &&
+        this.hitSideOfPlatform({
+          object: this,
+          platform
+        })
+      ) {
+        this.velocity.x = 0
+      }
     })
 
     // sprite switching
-    if (this.keys.right.pressed && this.currentKey === "right" && this.currentSprite !== this.sprites.run.right) {
-      this.frames = 1
-      this.currentSprite = this.sprites.run.right
-      this.currentCropWidth = this.sprites.run.cropWidth
-      this.width = this.sprites.run.width
-    } else if (this.keys.left.pressed && this.currentKey === "left" && this.currentSprite !== this.sprites.run.left) {
-      this.currentSprite = this.sprites.run.left
-      this.currentCropWidth = this.sprites.run.cropWidth
-      this.width = this.sprites.run.width
-    } else if (!this.keys.left.pressed && this.currentKey === "left" && this.currentSprite !== this.sprites.stand.left) {
-      this.currentSprite = this.sprites.stand.left
-      this.currentCropWidth = this.sprites.stand.cropWidth
-      this.width = this.sprites.stand.width
-    } else if (!this.keys.right.pressed && this.currentKey === "right" && this.currentSprite !== this.sprites.stand.right) {
-      this.currentSprite = this.sprites.stand.right
-      this.currentCropWidth = this.sprites.stand.cropWidth
-      this.width = this.sprites.stand.width
+    if (this.velocity.y === 0) {
+      if (this.keys.right.pressed && this.currentKey === "right" && this.currentSprite !== this.sprites.run.right) {
+        this.frames = 1
+        this.currentSprite = this.sprites.run.right
+        this.currentCropWidth = this.sprites.run.cropWidth
+        this.width = this.sprites.run.width
+      } else if (this.keys.left.pressed && this.currentKey === "left" && this.currentSprite !== this.sprites.run.left) {
+        this.currentSprite = this.sprites.run.left
+        this.currentCropWidth = this.sprites.run.cropWidth
+        this.width = this.sprites.run.width
+      } else if (!this.keys.left.pressed && this.currentKey === "left" && this.currentSprite !== this.sprites.stand.left) {
+        this.currentSprite = this.sprites.stand.left
+        this.currentCropWidth = this.sprites.stand.cropWidth
+        this.width = this.sprites.stand.width
+      } else if (!this.keys.right.pressed && this.currentKey === "right" && this.currentSprite !== this.sprites.stand.right) {
+        this.currentSprite = this.sprites.stand.right
+        this.currentCropWidth = this.sprites.stand.cropWidth
+        this.width = this.sprites.stand.width
+      }
     }
 
     if (this.lives === 0) {
@@ -269,8 +318,10 @@ class Player {
     }
     
     // win condition
-    if (this.traveledCount > 15000) {
+    if (this.traveledCount > 16250) {
       this.gameWin()
+      this.speed = 0
+      this.currentSprite === this.sprites.stand.right
     }
 
   }
@@ -283,7 +334,7 @@ class Player {
         object1: this,
         object2: enemy
         })) {
-          this.velocity.y -= 35
+          this.velocity.y -= 15
           setTimeout(() => {
             this.enemies.splice(index, 1)
           }, 0)
@@ -345,7 +396,13 @@ class Player {
 
   resetEnemy() {
     let enemies = [  new Enemy( this.context, this.canvas,{position: {x: 1200, y: 100}, velocity: {x: 3, y: 0}, distance: {limit: 400, traveled: 0}} ),
-      new Enemy( this.context, this.canvas, {position: {x: 2300, y: 100}, velocity: {x: 3.5, y: 0}, distance: {limit: 300, traveled: 0}} )];
+      new Enemy( this.context, this.canvas, {position: {x: 2300, y: 100}, velocity: {x: 3.5, y: 0}, distance: {limit: 300, traveled: 0}}),
+      new Enemy( this.context, this.canvas,{position: {x: 4000, y: 100}, velocity: {x: 3, y: 0}, distance: {limit: 800, traveled: 0}} ),
+      new Enemy( this.context, this.canvas,{position: {x: 6350, y: 100}, velocity: {x: 3, y: 0}, distance: {limit: 500, traveled: 0}} ),
+      new Enemy( this.context, this.canvas,{position: {x: 7850, y: 100}, velocity: {x: 3, y: 0}, distance: {limit: 300, traveled: 0}} ),
+      new Enemy( this.context, this.canvas,{position: {x: 10450, y: 100}, velocity: {x: 3, y: 0}, distance: {limit: 400, traveled: 0}} ),
+      new Enemy( this.context, this.canvas,{position: {x: 12020, y: 100}, velocity: {x: 3, y: 0}, distance: {limit: 300, traveled: 0}} )
+    ];
     return enemies
   }
 
@@ -361,8 +418,9 @@ class Player {
     // Disable player movement
     this.removeEventListeners()
     this.speed = 0
+    this.velocity.x = 0
+    this.velocity.y = 0
     this.currentSprite === this.sprites.stand.right
-    this.frames = 0
   
     // Add restart button
     this.restartBtn.style.display = "block";
@@ -371,7 +429,6 @@ class Player {
 
   gameWin() {
     // Display game over screen
-    console.log("gameWin function called");
     // this.context.fillStyle = "black";
     // this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
     // this.context.fillStyle = "white";
@@ -381,17 +438,12 @@ class Player {
   
     // Disable player movement
     this.removeEventListeners()
-    this.speed = 0
-    this.currentSprite === this.sprites.stand.right
-    this.frames = 0
+    // this.frames = 0
   
     // Add restart button
     this.restartBtn.style.display = "block";
 
   }
-
-  
-  
 
 }
 

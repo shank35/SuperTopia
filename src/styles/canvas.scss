@@ -1,20 +1,43 @@
+
 body {
   margin: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
+  // background-color: #f5f5f5;
+  background-image: url("../../src/img/space3.gif");
+  background-position: center;
+  background-size: cover;
 }
 
 canvas {
+  position: absolute;
   background-color: black;
+  border: 2px solid white;
+  box-shadow: 0 0 10px white;
 }
 
 h1 {
   position: absolute;
-  top: 180px;
-  left: 50%;
-  transform: translate(-50%);
+  top: 12%;
+  left: 51%;
+  transform: translate(-50%, -50%);
+  font-size: 75px;
+  font-family: pixel2;
+  color: whitesmoke;
+  letter-spacing: 0.15rem;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: -4px 4px #ef3550,
+               -8px 8px #f48fb1,
+               -12px 12px #7e57c2,
+               -16px 16px #2196f3,
+               -20px 20px #26c6da,
+               -24px 24px #43a047,
+               -28px 28px #eeff41,
+               -32px 32px #f9a825,
+               -36px 36px #ff5722;
 }
 
 
@@ -28,18 +51,19 @@ h1 {
   cursor: pointer;
   z-index: 100;
   display: none;
+  font-family: pixel2;
 }
 
 #github {
-  position: absolute;
-  top: 190px;
-  right: 600px;
+  position: fixed;
+  top: 20px;
+  right: 80px;
 }
 
 #linkedin {
-  position: absolute;
-  top: 195px;
-  right: 550px;
+  position: fixed;
+  top: 25px;
+  right: 20px;
 }
 
 #menu {
@@ -47,15 +71,9 @@ h1 {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #fff;
-  // padding: 20px;
-  border: 2px solid #000;
-  border-radius: 5px;
   text-align: center;
-  font-family: Arial, sans-serif;
   font-size: 24px;
-  width: 1024px;
-  height: 576px;
+  color: whitesmoke;
 }
 
 #menu h2 {
@@ -75,4 +93,30 @@ h1 {
 
 #menu button:hover {
   background-color: #555;
+}
+
+#p1 {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 25px;
+  font-family: pixel2;
+  color: whitesmoke;
+  white-space: nowrap;
+}
+
+#p2 {
+  position: absolute;
+  top: 23%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 25px;
+  font-family: pixel2;
+  color: whitesmoke;
+  white-space: nowrap;
+}
+
+#h2 {
+  font-family: pixel2;
 }
