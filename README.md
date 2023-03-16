@@ -26,13 +26,13 @@ Implementation Timeline
 
   NB:
 
-    Friday Afternoon & Weekend: Setup project, getting webpack up and running. Get canvas to show up on the screen, and spend time getting comfortable with the CANVAS API. Create the map for the game. Create the platforms and death pits on the map.
+    Friday Afternoon & Weekend: To begin the project, set up your environment by getting Webpack up and running. Next, ensure that the canvas appears on the screen and take the time to become familiar with the CANVAS API. Once that's complete, create the game's map, followed by designing the platforms and death pits to be included on the map.
 
-    Monday:  Create the player class and implement the player movement. Create the sprite for the character so that the character looks like its moving.
+    Monday: Start by designing the player class and implementing the necessary code for player movement. Then, create a sprite for the character to give the impression that the player is in motion.
 
-    Tuesday: Be able to scroll the background, so that the character appears to be moving. Score, coins, world, time, lives on the map.
+    Tuesday: Be able to scroll the background, so that the character appears to be moving. World, time, lives on the map.
 
-    Wednesday: Create the enemies on the map, moving back and forth on a certain area of the map. Create power ups so that the player can get special powers.
+    Wednesday: Enable the background to scroll in a way that gives the illusion that the player is moving forward. Additionally, ensure that the map displays key gameplay elements such as world, time, and lives.
 
     Thursday Morning: Deploy to GitHub pages. If there is time, rewrite this proposal as a production README.
 

@@ -37,6 +37,7 @@ import Enemy from "./scripts/enemy";
 import Platform from "./scripts/terrain";
 import FlagPole from "./scripts/flagpole";
 
+
 const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d");
 
@@ -101,13 +102,13 @@ let sprites = {
   run: {
     right: createImage(spriteRunRight),
     left: createImage(spriteRunLeft),
-    cropWidth: 341,
+    cropWidth: 340,
     width: 127.875
   },
   jump: {
     right: createImage(spriteJumpRight),
     left: createImage(spriteJumpLeft),
-    cropWidth: 341,
+    cropWidth: 340,
     width: 127.875
   },
   heart: {

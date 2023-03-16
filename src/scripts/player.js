@@ -5,6 +5,7 @@
 import { resetMap, drawTimerBar, drawScore, collectCoin, updateScore } from "../index.js"
 import Enemy from "./enemy.js"
 
+import { audio } from "./audio.js";
 
 const gravity = 1.2;
 
@@ -15,7 +16,7 @@ class Player {
 
     this.position = { x: 0, y: 300 }
     this.velocity = { x: 0, y: 0 }
-    this.speed = 30 //10
+    this.speed = 10 //30 //10
 
     this.width = 66
     this.height = 150
@@ -38,9 +39,6 @@ class Player {
 
     this.lives = 3
 
-    this.gameDone = true
-    this.gameWon = true
-
     this.currentKey = ""
 
 
@@ -61,6 +59,7 @@ class Player {
     this.restartBtn.addEventListener("click", function() {
       window.location.reload();
     });
+
 
   }
 
@@ -87,7 +86,8 @@ class Player {
       case 87:
         console.log("up")
         if (this.velocity.y === 0) {
-          this.velocity.y -= 30 //20
+          audio.jump.play();
+          this.velocity.y -= 20 //30 //20
         }
         if (this.currentKey === "right") {
           this.currentSprite = this.sprites.jump.right
@@ -229,8 +229,6 @@ class Player {
     //scrolling
     if (this.keys.right.pressed) {
       this.traveledCount += this.speed
-      console.log(this.traveledCount)
-
       this.platforms.forEach(platform => {
         platform.position.x -= this.speed
       })
@@ -242,8 +240,6 @@ class Player {
       })
     } else if (this.keys.left.pressed && this.traveledCount > 0) {
       this.traveledCount -= this.speed
-      console.log(this.traveledCount)
-
       this.platforms.forEach(platform => {
         platform.position.x += this.speed
       })
@@ -314,6 +310,7 @@ class Player {
     }
 
     if (this.lives === 0) {
+      audio.gameOver.play();
       this.gameOver()
     }
     
@@ -334,7 +331,8 @@ class Player {
         object1: this,
         object2: enemy
         })) {
-          this.velocity.y -= 15
+          this.velocity.y -= 20
+          audio.goombaSquash.play();
           setTimeout(() => {
             this.enemies.splice(index, 1)
           }, 0)
@@ -345,6 +343,7 @@ class Player {
           if (this.lives === 0) {
             this.gameOver();
           } else {
+            audio.die.play();
             this.reset()
             this.enemies = this.resetEnemy()
             resetMap()
@@ -360,6 +359,7 @@ class Player {
       if (this.lives === 0) {
         this.gameOver();
       } else {
+        audio.die.play();
         this.reset()
         this.enemies = this.resetEnemy()
         resetMap()
@@ -435,7 +435,8 @@ class Player {
     this.context.font = "50px Arial";
     this.context.textAlign = "center";
     this.context.fillText("You won!!!", this.canvas.width / 2, this.canvas.height / 2);
-  
+    // audio.completeLevel.play();
+
     // Disable player movement
     this.removeEventListeners()
     // this.frames = 0
