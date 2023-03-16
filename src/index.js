@@ -15,7 +15,6 @@ import blockTri from "./img/blockTri.png"
 
 import pole from "./img/flagPole.png"
 
-
 // import spriteRunLeft from "./img/spriteRunLeft.png"
 // import spriteRunRight from "./img/spriteRunRight.png"
 // import spriteStandLeft from "./img/spriteStandLeft.png"
@@ -43,7 +42,6 @@ import spriteMarioFireFlowerStandLeft from "./img/spriteMarioFireFlowerStandLeft
 import spriteMarioFireFlowerStandRight from "./img/spriteMarioFireFlowerStandRight.png"
 import spriteMarioFireFlowerJumpRight from "./img/spriteMarioFireFlowerJumpRight.png"
 import spriteMarioFireFlowerJumpLeft from "./img/spriteMarioFireFlowerJumpLeft.png"
-
 
 import fullHeart from "./img/fullHeart.png"
 
@@ -93,7 +91,6 @@ let backgrounds = [];
 
 
 let enemies = [
-
   new Enemy( context, canvas,{position: {x: 1200, y: 100}, velocity: {x: 3, y: 0}, distance: {limit: 400, traveled: 0}}),
   new Enemy( context, canvas, {position: {x: 2300, y: 100}, velocity: {x: 3.5, y: 0}, distance: {limit: 300, traveled: 0}}),
   new Enemy( context, canvas,{position: {x: 4000, y: 100}, velocity: {x: 3, y: 0}, distance: {limit: 800, traveled: 0}}),
@@ -274,7 +271,6 @@ async function resetMap() {
     new Platform(context, canvas, {x: platformImage.width * 2 + 200, y: 460, image: platformImage}),
     new Platform(context, canvas, {x: platformImage.width * 3 + 380, y: 460, image: platformImage}),
     new Platform(context, canvas, {x: platformImage.width * 4 + 380, y: 460, image: platformImage}),
-
     new Platform(context, canvas, {x: platformImage.width * 5 + 780, y: 460, image: platformImage}),
     new Platform(context, canvas, {x: platformImage.width * 6 + 780, y: 460, image: platformImage}),
     new Platform(context, canvas, {x: platformImage.width * 7 + 1100, y: 460, image: platformImage}),
@@ -362,7 +358,6 @@ async function resetMap() {
 
     new Platform(context, canvas, {x: 16300, y: 160, image: blockTriImage, block: true}),
     new Platform(context, canvas, {x: 16250, y: 160, image: blockImage, block: true})
-
   ];
   
   backgroundImage = await createImageAsync(backgroundImg);
@@ -375,7 +370,6 @@ async function resetMap() {
   
   backgrounds = [
     new Background(context, canvas, { x: 0, y: -98, image: backgroundImage }),
-
     new Background(context, canvas, { x: 1006, y: -98, image: backgroundImage2 }),
     new Background(context, canvas, { x: 2006, y: -89, image: backgroundImage }),
     new Background(context, canvas, { x: 3006, y: -98, image: backgroundImage2 }),
@@ -404,15 +398,6 @@ async function resetMap() {
     new Background(context, canvas, { x: 300, y: -10, image: objectImage2 }),
     new Background(context, canvas, { x: 150, y: -10, image: objectImage3 }),
     new Background(context, canvas, { x: 1000, y: 210, image: objectImage4 })
-
-    //new Background(context, canvas, { x: 1200, y: -98, image: backgroundImage }),
-    //new Background(context, canvas, { x: 2400, y: -98, image: backgroundImage }),
-    //new Background(context, canvas, { x: 3600, y: -98, image: backgroundImage }),
-    //new Background(context, canvas, { x: 4800, y: -98, image: backgroundImage }),
-    //new Background(context, canvas, { x: 6200, y: -98, image: backgroundImage }),
-    // new Background(context, canvas, { x: -100, y: -70, image: objectImage }),
-    // new Background(context, canvas, { x: 300, y: -30, image: objectImage2 })
-
   ];
 
   player.reset();
@@ -425,9 +410,5 @@ async function resetMap() {
   
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  resetMap();
-  player.animate();
-});
 
-export { resetMap };
+export { resetMap, drawTimerBar, drawScore, collectCoin, updateScore };

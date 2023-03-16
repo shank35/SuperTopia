@@ -74,20 +74,20 @@ class Player {
   handleKeyDown({ keyCode }) {
     switch (keyCode) {
       case 65:
-        console.log("left")
+        // console.log("left")
         this.keys.left.pressed = true
         this.currentKey = "left"
         break
       case 83:
-        console.log("down")
+        // console.log("down")
         break
       case 68:
-        console.log("right")
+        // console.log("right")
         this.keys.right.pressed = true
         this.currentKey = "right"
         break
       case 87:
-        console.log("up")
+        // console.log("up")
         if (this.velocity.y === 0) {
           audio.jump.play();
           this.velocity.y -= 20 //30 //20
@@ -104,18 +104,18 @@ class Player {
   handleKeyUp({ keyCode }) {
     switch (keyCode) {
       case 65:
-        console.log("left")
+        // console.log("left")
         this.keys.left.pressed = false
         break
       case 83:
-        console.log("down")
+        // console.log("down")
         break
       case 68:
-        console.log("right")
+        // console.log("right")
         this.keys.right.pressed = false
         break
       case 87:
-        console.log("up")
+        // console.log("up")
         break
     }
   }
@@ -312,16 +312,18 @@ class Player {
       }
     }
 
-    // if (this.lives === 0) {
-    //   audio.gameOver.play();
-    //   this.gameOver()
-    // }
+    if (this.lives === 0) {
+      audio.gameOver.play();
+      this.gameOver();
+      return;
+    }
     
     // win condition
     if (this.traveledCount > 16250) {
       this.gameWin()
       this.speed = 0
       this.currentSprite === this.sprites.stand.right
+      return;
     }
 
   }
@@ -409,6 +411,7 @@ class Player {
   }
 
   gameOver() {
+    // cancelAnimationFrame(requestAnimationFrame(this.animate));
     this.context.fillStyle = "black";
     this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
     this.context.fillStyle = "white";
@@ -420,7 +423,9 @@ class Player {
     this.velocity.x = 0
     this.velocity.y = 0
     this.currentSprite === this.sprites.stand.right
-    this.restartBtn.style.display = "block";
+    setTimeout(() => {
+      this.restartBtn.style.display = "block";
+    }, 3000);
     audio.gameOver.play();
 
   }
