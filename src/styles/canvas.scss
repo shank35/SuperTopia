@@ -12,11 +12,9 @@ body {
 }
 
 canvas {
-  position: absolute;
-  background-color: black;
-  border: 2px solid white;
-  box-shadow: 0 0 10px white;
+  background-color: white
 }
+
 
 h1 {
   position: absolute;
@@ -123,3 +121,4 @@ h1 {
 #h2 {
   font-family: pixel2;
 }
+
