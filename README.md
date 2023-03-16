@@ -26,13 +26,13 @@ Implementation Timeline
 
   NB:
 
-    Friday Afternoon & Weekend: To begin the project, set up your environment by getting Webpack up and running. Next, ensure that the canvas appears on the screen and take the time to become familiar with the CANVAS API. Once that's complete, create the game's map, followed by designing the platforms and death pits to be included on the map.
+    Friday Afternoon & Weekend: To begin the project, set up environment by getting Webpack up and running. Next, ensure that the canvas appears on the screen and take the time to become familiar with the CANVAS API. Once that's complete, create the game's map, followed by designing the platforms and death pits to be included on the map. Start by designing the player class and enemy class, implementing the necessary code for player movement. 
 
-    Monday: Start by designing the player class and implementing the necessary code for player movement. Then, create a sprite for the character to give the impression that the player is in motion.
+    Monday: Creating the scrolling background affect giving the illusion that the player is moving. Create platforms and blocks using block collision logic so that the player or the enemy cannot pass the block or platform. Make the logic for when the player loses. Add a timer and hearts so that we can keep track of how long it took the user to finish the game and to keep track how many hearts they have left.
 
-    Tuesday: Be able to scroll the background, so that the character appears to be moving. World, time, lives on the map.
+    Tuesday: Create the sprite for the character to give the impression that the player is in motion. Create a menu where the user can select which sprite they want to use.
 
-    Wednesday: Enable the background to scroll in a way that gives the illusion that the player is moving forward. Additionally, ensure that the map displays key gameplay elements such as world, time, and lives.
+    Wednesday: Create the user instructions so that the user will be able to know how to play the game. Finish creating the map and the ending of the map. Create the logic for when the player wins. Add in music to the game, so that the user will have a more enjoyable experience.
 
     Thursday Morning: Deploy to GitHub pages. If there is time, rewrite this proposal as a production README.
 
