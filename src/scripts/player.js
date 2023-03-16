@@ -16,10 +16,13 @@ class Player {
 
     this.position = { x: 0, y: 300 }
     this.velocity = { x: 0, y: 0 }
-    this.speed = 10 //30 //10
+    this.speed = 12 //30 //10
 
-    this.width = 66
-    this.height = 150
+    // this.width = 66
+    // this.height = 150
+    this.scale = 0.3
+    this.width = 398 * this.scale
+    this.height = 353 * this.scale
 
     this.context = context
     this.canvas = canvas
@@ -29,7 +32,7 @@ class Player {
 
     this.sprites = sprites
     this.currentSprite = this.sprites.stand.right
-    this.currentCropWidth = this.sprites.cropWidth
+    this.currentCropWidth = 398
 
     this.enemies = enemies
 
@@ -177,15 +180,15 @@ class Player {
     this.currentCropWidth * this.frames,
     0,
     this.currentCropWidth,
-    400,
+    353,
     this.position.x, this.position.y, this.width, this.height)
   }
 
   update () {
     this.frames += 1
-    if (this.frames > 59 && (this.currentSprite === this.sprites.stand.right || this.currentSprite === this.sprites.stand.left)) {
+    if (this.frames > 58 && (this.currentSprite === this.sprites.stand.right || this.currentSprite === this.sprites.stand.left)) {
       this.frames = 0
-    } else if (this.frames > 29 && (this.currentSprite === this.sprites.run.right || this.currentSprite === this.sprites.run.left )) {
+    } else if (this.frames > 28 && (this.currentSprite === this.sprites.run.right || this.currentSprite === this.sprites.run.left )) {
       this.frames = 0
     } else if (this.currentSprite === this.sprites.jump.right || this.currentSprite === this.sprites.jump.left) {
       this.frames = 0
@@ -309,10 +312,10 @@ class Player {
       }
     }
 
-    if (this.lives === 0) {
-      audio.gameOver.play();
-      this.gameOver()
-    }
+    // if (this.lives === 0) {
+    //   audio.gameOver.play();
+    //   this.gameOver()
+    // }
     
     // win condition
     if (this.traveledCount > 16250) {
@@ -367,14 +370,13 @@ class Player {
     }
   }
 
-  // drawing hearts
   drawHearts() {
     const heartWidth = 34;
     const heartPadding = 20;
     const heartX = this.canvas.width - this.lives * (heartWidth + heartPadding);
     const heartY = 10;
     const text = "Lives";
-    const textX = heartX + 40; // adjust the x position as needed
+    const textX = heartX + 40;
     const textY = heartY + 22;
     
     // Draw the text
@@ -407,47 +409,31 @@ class Player {
   }
 
   gameOver() {
-    // Display game over screen
     this.context.fillStyle = "black";
     this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
     this.context.fillStyle = "white";
     this.context.font = "50px Arial";
     this.context.textAlign = "center";
     this.context.fillText("Game Over", this.canvas.width / 2, this.canvas.height / 2);
-  
-    // Disable player movement
     this.removeEventListeners()
     this.speed = 0
     this.velocity.x = 0
     this.velocity.y = 0
     this.currentSprite === this.sprites.stand.right
-  
-    // Add restart button
     this.restartBtn.style.display = "block";
+    audio.gameOver.play();
 
   }
 
   gameWin() {
-    // Display game over screen
-    // this.context.fillStyle = "black";
-    // this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
-    // this.context.fillStyle = "white";
     this.context.font = "50px Arial";
     this.context.textAlign = "center";
     this.context.fillText("You won!!!", this.canvas.width / 2, this.canvas.height / 2);
-    // audio.completeLevel.play();
-
-    // Disable player movement
     this.removeEventListeners()
-    // this.frames = 0
-  
-    // Add restart button
     this.restartBtn.style.display = "block";
-
   }
 
 }
-
 
 
 export default Player;
