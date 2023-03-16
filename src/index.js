@@ -1,7 +1,6 @@
 // index.js
 import platform from "./img/platform.png"
 import smallPlatform from "./img/smallPlatform.png"
-import smallPlatform2 from "./img/smallPlatform2.png"
 
 import backgroundImg from "./img/greenSpace.png"
 import backgroundImg2 from "./img/greenSpaceF.png"
@@ -35,8 +34,6 @@ import fullHeart from "./img/fullHeart.png"
 import Player from "./scripts/player";
 import Enemy from "./scripts/enemy";
 import Platform from "./scripts/terrain";
-import FlagPole from "./scripts/flagpole";
-
 
 const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d");
@@ -58,7 +55,6 @@ function createImageAsync(imageSrc) {
     }
     image.src = imageSrc
   })
-
 }
 
 
@@ -69,7 +65,6 @@ let blockImage
 let blockTriImage
 
 let smallPlatformImage
-let smallPlatforms = [];
 
 let backgroundImage
 let backgroundImage2
@@ -82,14 +77,13 @@ let backgrounds = [];
 
 
 let enemies = [
-  new Enemy( context, canvas,{position: {x: 1200, y: 100}, velocity: {x: 3, y: 0}, distance: {limit: 400, traveled: 0}} ),
+  new Enemy( context, canvas,{position: {x: 1200, y: 100}, velocity: {x: 3, y: 0}, distance: {limit: 400, traveled: 0}}),
   new Enemy( context, canvas, {position: {x: 2300, y: 100}, velocity: {x: 3.5, y: 0}, distance: {limit: 300, traveled: 0}}),
-  new Enemy( context, canvas,{position: {x: 4000, y: 100}, velocity: {x: 3, y: 0}, distance: {limit: 800, traveled: 0}} ),
-  new Enemy( context, canvas,{position: {x: 6350, y: 100}, velocity: {x: 3, y: 0}, distance: {limit: 500, traveled: 0}} ),
-  new Enemy( context, canvas,{position: {x: 7850, y: 100}, velocity: {x: 3, y: 0}, distance: {limit: 300, traveled: 0}} ),
-  new Enemy( context, canvas,{position: {x: 10450, y: 100}, velocity: {x: 3, y: 0}, distance: {limit: 400, traveled: 0}} ),
-  new Enemy( context, canvas,{position: {x: 12020, y: 100}, velocity: {x: 3, y: 0}, distance: {limit: 300, traveled: 0}} )
-
+  new Enemy( context, canvas,{position: {x: 4000, y: 100}, velocity: {x: 3, y: 0}, distance: {limit: 800, traveled: 0}}),
+  new Enemy( context, canvas,{position: {x: 6350, y: 100}, velocity: {x: 3, y: 0}, distance: {limit: 500, traveled: 0}}),
+  new Enemy( context, canvas,{position: {x: 7850, y: 100}, velocity: {x: 3, y: 0}, distance: {limit: 300, traveled: 0}}),
+  new Enemy( context, canvas,{position: {x: 10450, y: 100}, velocity: {x: 3, y: 0}, distance: {limit: 400, traveled: 0}}),
+  new Enemy( context, canvas,{position: {x: 12020, y: 100}, velocity: {x: 3, y: 0}, distance: {limit: 300, traveled: 0}})
 ]
 
 let sprites = {
@@ -119,20 +113,12 @@ let sprites = {
 let timeLeft = 400; // set the total time limit of the game
 
 function drawTimerBar() {
-  // context.fillStyle = "black";
-  const barWidth = 220; // Set the width of the timer bar
-  // const barHeight = 40; // Set the height of the timer bar
-  const barX = (canvas.width - barWidth) / 2; // Calculate the x position of the timer bar
-  const barY = 30; // Set the y position of the timer bar
-  // context.fillRect(barX, 15, barWidth, barHeight); // Draw a black bar
-
-  // let timerWidth = (timeLeft / 400) * barWidth; // Calculate the width of the timer bar
-  // context.fillStyle = "red";
-  // context.fillRect(barX, 15, timerWidth, barHeight); // Draw the timer bar
-  
+  const barWidth = 220;
+  const barX = (canvas.width - barWidth) / 2;
+  const barY = 30;
   context.fillStyle = "bold white Arial";
   context.font = "30px Arial";
-  context.fillText(`Time Left`, barX + 10, barY + 15); // Display the time left on the timer bar
+  context.fillText(`Time Left`, barX + 10, barY + 15);
 
   context.fillStyle = "bold white Arial";
   context.font = "30px Arial";
@@ -145,10 +131,10 @@ const timerId = setInterval(() => {
     clearInterval(timerId);
     location.reload();
   }
-}, 1000); // Run the timer function every 1 second (1000 milliseconds)
+}, 1000);
 
-let score = 0; // initialize the score to zero
-let coins = 0; // initialize the number of coins collected to zero
+let score = 0;
+let coins = 0;
 
 function drawScore() {
   context.font = "bold 28px Arial";
@@ -168,12 +154,12 @@ function drawScore() {
 }
 
 function collectCoin() {
-  coins++; // increment the number of coins collected
-  score += 100; // add 100 to the score for collecting a coin
+  coins++;
+  score += 100;
 }
 
 function updateScore() {
-  drawScore(); // redraw the score display
+  drawScore();
 }
 
 const player = new Player(context, canvas, platforms, backgrounds, sprites, enemies);
@@ -251,6 +237,7 @@ document.addEventListener("DOMContentLoaded", () => {
   resetMap();
   player.animate();
 });
+
 let flagPoleImage
 
 async function resetMap() {
@@ -263,7 +250,6 @@ async function resetMap() {
 
 
   platforms = [
-
     new Platform(context, canvas, {x: 16800, y: 92, image: flagPoleImage}),
     new Platform(context, canvas, {x: platformImage.width * 4 + 380 + platformImage.width - smallPlatformImage.width, y: 290, image: smallPlatformImage}),
     new Platform(context, canvas, {x: -1, y: 460, image: platformImage}),
@@ -358,9 +344,6 @@ async function resetMap() {
 
     new Platform(context, canvas, {x: 16300, y: 160, image: blockTriImage, block: true}),
     new Platform(context, canvas, {x: 16250, y: 160, image: blockImage, block: true})
-
-
-
   ];
   
   backgroundImage = await createImageAsync(backgroundImg);
@@ -390,7 +373,6 @@ async function resetMap() {
     new Background(context, canvas, { x: 15006, y: -98, image: backgroundImage2 }),
     new Background(context, canvas, { x: 16006, y: -98, image: backgroundImage }),
     new Background(context, canvas, { x: 17006, y: -98, image: backgroundImage2 }),
-    // new Background(context, canvas, { x: -100, y: -70, image: objectImage }),
     new Background(context, canvas, { x: 1600, y: -70, image: objectImage }),
     new Background(context, canvas, { x: 3600, y: -70, image: objectImage }),
     new Background(context, canvas, { x: 5600, y: -70, image: objectImage }),
@@ -411,6 +393,7 @@ async function resetMap() {
   enemies.forEach(ele => {
     ele.reset();
   });
+  
 }
 
 

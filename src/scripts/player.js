@@ -16,7 +16,7 @@ class Player {
 
     this.position = { x: 0, y: 300 }
     this.velocity = { x: 0, y: 0 }
-    this.speed = 10 //30 //10
+    this.speed = 12 //30 //10
 
     this.width = 66
     this.height = 150
@@ -309,10 +309,10 @@ class Player {
       }
     }
 
-    if (this.lives === 0) {
-      audio.gameOver.play();
-      this.gameOver()
-    }
+    // if (this.lives === 0) {
+    //   audio.gameOver.play();
+    //   this.gameOver()
+    // }
     
     // win condition
     if (this.traveledCount > 16250) {
@@ -367,14 +367,13 @@ class Player {
     }
   }
 
-  // drawing hearts
   drawHearts() {
     const heartWidth = 34;
     const heartPadding = 20;
     const heartX = this.canvas.width - this.lives * (heartWidth + heartPadding);
     const heartY = 10;
     const text = "Lives";
-    const textX = heartX + 40; // adjust the x position as needed
+    const textX = heartX + 40;
     const textY = heartY + 22;
     
     // Draw the text
@@ -407,47 +406,31 @@ class Player {
   }
 
   gameOver() {
-    // Display game over screen
     this.context.fillStyle = "black";
     this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
     this.context.fillStyle = "white";
     this.context.font = "50px Arial";
     this.context.textAlign = "center";
     this.context.fillText("Game Over", this.canvas.width / 2, this.canvas.height / 2);
-  
-    // Disable player movement
     this.removeEventListeners()
     this.speed = 0
     this.velocity.x = 0
     this.velocity.y = 0
     this.currentSprite === this.sprites.stand.right
-  
-    // Add restart button
     this.restartBtn.style.display = "block";
+    audio.gameOver.play();
 
   }
 
   gameWin() {
-    // Display game over screen
-    // this.context.fillStyle = "black";
-    // this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
-    // this.context.fillStyle = "white";
     this.context.font = "50px Arial";
     this.context.textAlign = "center";
     this.context.fillText("You won!!!", this.canvas.width / 2, this.canvas.height / 2);
-    // audio.completeLevel.play();
-
-    // Disable player movement
     this.removeEventListeners()
-    // this.frames = 0
-  
-    // Add restart button
     this.restartBtn.style.display = "block";
-
   }
 
 }
-
 
 
 export default Player;

@@ -75,10 +75,10 @@ canvas {
 
 h1 {
   position: absolute;
-  top: 8%;
-  left: 51%;
+  top: 5%;
+  left: 53%;
   transform: translate(-50%, -50%);
-  font-size: 75px;
+  font-size: 55px;
   font-family: pixel2;
   color: whitesmoke;
   letter-spacing: 0.15rem;
@@ -143,10 +143,10 @@ h1 {
 
 #p1 {
   position: absolute;
-  top: 17%;
+  top: 13%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 25px;
+  font-size: 20px;
   font-family: pixel2;
   color: whitesmoke;
   white-space: nowrap;
@@ -154,10 +154,10 @@ h1 {
 
 #p2 {
   position: absolute;
-  top: 20%;
+  top: 16%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 25px;
+  font-size: 20px;
   font-family: pixel2;
   color: whitesmoke;
   white-space: nowrap;
