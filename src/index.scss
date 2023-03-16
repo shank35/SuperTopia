@@ -1,1 +1,13 @@
+@import "./styles/reset.scss";
 @import "./styles/canvas.scss";
+
+
+@font-face {
+  font-family: pixel2;
+  src: url("../src/img/04B_30__.woff");
+}
+
+@font-face {
+  font-family: pixel;
+  src: url("../src/img/8-bit-Arcade-Out.woff");
+}
