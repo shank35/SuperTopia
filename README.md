@@ -23,6 +23,9 @@
     - Webpack to bundle and transpile the source JavaScript code
     - npm to manage project dependencies
 
+# Wireframe
+  ![Wireframe](./Mockup.png)
+
 
 # Implementation Timeline
 
