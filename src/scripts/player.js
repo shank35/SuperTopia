@@ -18,8 +18,11 @@ class Player {
     this.velocity = { x: 0, y: 0 }
     this.speed = 12 //30 //10
 
-    this.width = 66
-    this.height = 150
+    // this.width = 66
+    // this.height = 150
+    this.scale = 0.3
+    this.width = 398 * this.scale
+    this.height = 353 * this.scale
 
     this.context = context
     this.canvas = canvas
@@ -29,7 +32,7 @@ class Player {
 
     this.sprites = sprites
     this.currentSprite = this.sprites.stand.right
-    this.currentCropWidth = this.sprites.cropWidth
+    this.currentCropWidth = 398
 
     this.enemies = enemies
 
@@ -177,15 +180,15 @@ class Player {
     this.currentCropWidth * this.frames,
     0,
     this.currentCropWidth,
-    400,
+    353,
     this.position.x, this.position.y, this.width, this.height)
   }
 
   update () {
     this.frames += 1
-    if (this.frames > 59 && (this.currentSprite === this.sprites.stand.right || this.currentSprite === this.sprites.stand.left)) {
+    if (this.frames > 58 && (this.currentSprite === this.sprites.stand.right || this.currentSprite === this.sprites.stand.left)) {
       this.frames = 0
-    } else if (this.frames > 29 && (this.currentSprite === this.sprites.run.right || this.currentSprite === this.sprites.run.left )) {
+    } else if (this.frames > 28 && (this.currentSprite === this.sprites.run.right || this.currentSprite === this.sprites.run.left )) {
       this.frames = 0
     } else if (this.currentSprite === this.sprites.jump.right || this.currentSprite === this.sprites.jump.left) {
       this.frames = 0

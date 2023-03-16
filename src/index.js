@@ -15,19 +15,33 @@ import blockTri from "./img/blockTri.png"
 
 import pole from "./img/flagPole.png"
 
-import spriteRunLeft from "./img/spriteRunLeft.png"
-import spriteRunRight from "./img/spriteRunRight.png"
-import spriteStandLeft from "./img/spriteStandLeft.png"
-import spriteStandRight from "./img/spriteStandRight.png"
-import spriteJumpRight from "./img/spriteJumpRight.png"
-import spriteJumpLeft from "./img/spriteJumpLeft.png"
+// import spriteRunLeft from "./img/spriteRunLeft.png"
+// import spriteRunRight from "./img/spriteRunRight.png"
+// import spriteStandLeft from "./img/spriteStandLeft.png"
+// import spriteStandRight from "./img/spriteStandRight.png"
+// import spriteJumpRight from "./img/spriteJumpRight.png"
+// import spriteJumpLeft from "./img/spriteJumpLeft.png"
 
-import spriteFireFlowerRunLeft from "./img/spriteFireFlowerRunLeft.png"
-import spriteFireFlowerRunRight from "./img/spriteFireFlowerRunRight.png"
-import spriteFireFlowerStandLeft from "./img/spriteFireFlowerStandLeft.png"
-import spriteFireFlowerStandRight from "./img/spriteFireFlowerStandRight.png"
-import spriteFireFlowerJumpRight from "./img/spriteFireFlowerJumpRight.png"
-import spriteFireFlowerJumpLeft from "./img/spriteFireFlowerJumpLeft.png"
+// import spriteFireFlowerRunLeft from "./img/spriteFireFlowerRunLeft.png"
+// import spriteFireFlowerRunRight from "./img/spriteFireFlowerRunRight.png"
+// import spriteFireFlowerStandLeft from "./img/spriteFireFlowerStandLeft.png"
+// import spriteFireFlowerStandRight from "./img/spriteFireFlowerStandRight.png"
+// import spriteFireFlowerJumpRight from "./img/spriteFireFlowerJumpRight.png"
+// import spriteFireFlowerJumpLeft from "./img/spriteFireFlowerJumpLeft.png"
+
+import spriteMarioRunLeft from "./img/spriteMarioRunLeft.png"
+import spriteMarioRunRight from "./img/spriteMarioRunRight.png"
+import spriteMarioStandLeft from "./img/spriteMarioStandLeft.png"
+import spriteMarioStandRight from "./img/spriteMarioStandRight.png"
+import spriteMarioJumpRight from "./img/spriteMarioJumpRight.png"
+import spriteMarioJumpLeft from "./img/spriteMarioJumpLeft.png"
+
+import spriteMarioFireFlowerRunLeft from "./img/spriteMarioFireFlowerRunLeft.png"
+import spriteMarioFireFlowerRunRight from "./img/spriteMarioFireFlowerRunRight.png"
+import spriteMarioFireFlowerStandLeft from "./img/spriteMarioFireFlowerStandLeft.png"
+import spriteMarioFireFlowerStandRight from "./img/spriteMarioFireFlowerStandRight.png"
+import spriteMarioFireFlowerJumpRight from "./img/spriteMarioFireFlowerJumpRight.png"
+import spriteMarioFireFlowerJumpLeft from "./img/spriteMarioFireFlowerJumpLeft.png"
 
 import fullHeart from "./img/fullHeart.png"
 
@@ -87,27 +101,27 @@ let enemies = [
 ]
 
 let sprites = {
-  stand: {
-    right: createImage(spriteStandRight),
-    left: createImage(spriteStandLeft),
-    cropWidth: 177,
-    width: 66
-  },
-  run: {
-    right: createImage(spriteRunRight),
-    left: createImage(spriteRunLeft),
-    cropWidth: 340,
-    width: 127.875
-  },
-  jump: {
-    right: createImage(spriteJumpRight),
-    left: createImage(spriteJumpLeft),
-    cropWidth: 340,
-    width: 127.875
-  },
-  heart: {
-    full: createImage(fullHeart),
-  }
+    stand: {
+      right: createImage(spriteMarioStandRight),
+      left: createImage(spriteMarioStandLeft),
+      cropWidth: 398,
+      width: 398 * 0.3
+    },
+    run: {
+      right: createImage(spriteMarioRunRight),
+      left: createImage(spriteMarioRunLeft),
+      cropWidth: 398,
+      width: 398 * 0.3
+    },
+    jump: {
+      right: createImage(spriteMarioJumpRight),
+      left: createImage(spriteMarioJumpLeft),
+      cropWidth: 398,
+      width: 398 * 0.3
+    },
+    heart: {
+      full: createImage(fullHeart),
+    }
 }
 
 let timeLeft = 400; // set the total time limit of the game
@@ -174,22 +188,22 @@ sprite1Button.addEventListener("click", () => {
   // Set the player's sprite to the white sprite
   sprites = {
     stand: {
-      right: createImage(spriteStandRight),
-      left: createImage(spriteStandLeft),
-      cropWidth: 177,
-      width: 66
+      right: createImage(spriteMarioStandRight),
+      left: createImage(spriteMarioStandLeft),
+      cropWidth: 398,
+      width: 398 * 0.3
     },
     run: {
-      right: createImage(spriteRunRight),
-      left: createImage(spriteRunLeft),
-      cropWidth: 341,
-      width: 127.875
+      right: createImage(spriteMarioRunRight),
+      left: createImage(spriteMarioRunLeft),
+      cropWidth: 398,
+      width: 398 * 0.3
     },
     jump: {
-      right: createImage(spriteJumpRight),
-      left: createImage(spriteJumpLeft),
-      cropWidth: 341,
-      width: 127.875
+      right: createImage(spriteMarioJumpRight),
+      left: createImage(spriteMarioJumpLeft),
+      cropWidth: 398,
+      width: 398 * 0.3
     },
     heart: {
       full: createImage(fullHeart),
@@ -204,22 +218,22 @@ sprite2Button.addEventListener("click", () => {
   // Set the player's sprite to the red sprite
   sprites = {
     stand: {
-      right: createImage(spriteFireFlowerStandRight),
-      left: createImage(spriteFireFlowerStandLeft),
-      cropWidth: 177,
-      width: 66
+      right: createImage(spriteMarioFireFlowerStandRight),
+      left: createImage(spriteMarioFireFlowerStandLeft),
+      cropWidth: 398,
+      width: 398 * 0.3
     },
     run: {
-      right: createImage(spriteFireFlowerRunRight),
-      left: createImage(spriteFireFlowerRunLeft),
-      cropWidth: 341,
-      width: 127.875
+      right: createImage(spriteMarioFireFlowerRunRight),
+      left: createImage(spriteMarioFireFlowerRunLeft),
+      cropWidth: 398,
+      width: 398 * 0.3
     },
     jump: {
-      right: createImage(spriteFireFlowerJumpRight),
-      left: createImage(spriteFireFlowerJumpLeft),
-      cropWidth: 341,
-      width: 127.875
+      right: createImage(spriteMarioFireFlowerJumpRight),
+      left: createImage(spriteMarioFireFlowerJumpLeft),
+      cropWidth: 398,
+      width: 398 * 0.3
     },
     heart: {
       full: createImage(fullHeart),
@@ -387,7 +401,7 @@ async function resetMap() {
   ];
 
   player.reset();
-  player.position = { x: 0, y: 250 }; 
+  player.position = { x: 100, y: 250 }; 
   player.platforms = platforms;
   player.backgrounds = backgrounds;
   enemies.forEach(ele => {
