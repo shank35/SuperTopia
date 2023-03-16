@@ -180,7 +180,9 @@ const player = new Player(context, canvas, platforms, backgrounds, sprites, enem
 
 player.removeEventListeners();
 
-const menu = document.getElementById("menu");
+
+document.addEventListener("DOMContentLoaded", () => {
+  const menu = document.getElementById("menu");
 const sprite1Button = document.getElementById("whiteSprite");
 const sprite2Button = document.getElementById("redSprite");
 
@@ -244,10 +246,8 @@ sprite2Button.addEventListener("click", () => {
   menu.style.display = "none";
   player.addEventListeners();
 });
-
-document.addEventListener("DOMContentLoaded", () => {
-  const menu = document.getElementById("menu");
-  menu.style.display = "block";
+  const menu1 = document.getElementById("menu");
+  menu1.style.display = "block";
   resetMap();
   player.animate();
 });

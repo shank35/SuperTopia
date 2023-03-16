@@ -13,6 +13,7 @@ class Player {
 
   constructor(context, canvas, platforms, backgrounds, sprites, enemies) {
 
+    this.gameOverDisplayed = false;
 
     this.position = { x: 0, y: 300 }
     this.velocity = { x: 0, y: 0 }
@@ -209,6 +210,10 @@ class Player {
     requestAnimationFrame(boundFunc);
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+    if (this.gameOverDisplayed) {
+      return;
+    }
+
     this.backgrounds.forEach(background => {
       background.draw()
     })
@@ -314,6 +319,7 @@ class Player {
 
     if (this.lives === 0) {
       audio.gameOver.play();
+      this.gameOverDisplayed = true;
       this.gameOver();
       return;
     }
