@@ -336,32 +336,44 @@ class Player {
 
   enemyCollision() {
     this.enemies.forEach((enemy, index) => {
-      enemy.update()
+      enemy.update();
+
+      // Check side collisions with platforms
+      this.platforms.forEach((platform) => {
+        if (this.hitSideOfPlatform({ object: enemy, platform })) {
+          enemy.reverseDirection();
+        }
+      });
+
       if (
         this.enemyCollisionTop({
-        object1: this,
-        object2: enemy
-        })) {
-          this.velocity.y -= 20
-          audio.goombaSquash.play();
-          setTimeout(() => {
-            this.enemies.splice(index, 1)
-          }, 0)
-        } else if (
-          this.position.x + this.width >= enemy.position.x && this.position.y + this.height >= enemy.position.y && this.position.x <= enemy.position.x + enemy.width
-        ) {
-          this.lives -= 1
-          if (this.lives === 0) {
-            this.gameOver();
-          } else {
-            audio.die.play();
-            this.reset()
-            this.enemies = this.resetEnemy()
-            resetMap()
-          }
+          object1: this,
+          object2: enemy,
+        })
+      ) {
+        this.velocity.y -= 20;
+        audio.goombaSquash.play();
+        setTimeout(() => {
+          this.enemies.splice(index, 1);
+        }, 0);
+      } else if (
+        this.position.x + this.width >= enemy.position.x &&
+        this.position.y + this.height >= enemy.position.y &&
+        this.position.x <= enemy.position.x + enemy.width
+      ) {
+        this.lives -= 1;
+        if (this.lives === 0) {
+          this.gameOver();
+        } else {
+          audio.die.play();
+          this.reset();
+          this.enemies = this.resetEnemy();
+          resetMap();
         }
-    })
+      }
+    });
   }
+
 
   // falling into death pit
   fallOffScreen() {

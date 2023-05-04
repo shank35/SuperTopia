@@ -44,6 +44,10 @@ class Enemy {
 
   }
 
+  reverseDirection() {
+    this.velocity.x = -this.velocity.x;
+  }
+
   draw() {
     // this.context.fillStyle = 'blue';
     
