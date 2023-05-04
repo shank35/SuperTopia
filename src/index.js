@@ -139,14 +139,6 @@ function drawTimerBar() {
   context.fillText(timeLeft, barX + 55, barY + 50);
 }
 
-const timerId = setInterval(() => {
-  timeLeft -= 1;
-  if (timeLeft <= 0) {
-    clearInterval(timerId);
-    location.reload();
-  }
-}, 1000);
-
 let score = 0;
 let coins = 0;
 
@@ -211,6 +203,13 @@ sprite1Button.addEventListener("click", () => {
   }
   // Hide the menu
   menu.style.display = "none";
+  const timerId = setInterval(() => {
+    timeLeft -= 1;
+    if (timeLeft <= 0) {
+      clearInterval(timerId);
+      location.reload();
+    }
+  }, 1000);
   player.addEventListeners();
 });
 
@@ -242,6 +241,13 @@ sprite2Button.addEventListener("click", () => {
   player.setSprite(sprites)
   // Hide the menu
   menu.style.display = "none";
+  const timerId = setInterval(() => {
+    timeLeft -= 1;
+    if (timeLeft <= 0) {
+      clearInterval(timerId);
+      location.reload();
+    }
+  }, 1000);
   player.addEventListeners();
 });
 
