@@ -17,7 +17,7 @@ class Player {
 
     this.position = { x: 0, y: 300 }
     this.velocity = { x: 0, y: 0 }
-    this.speed = 12 //30 //10
+    this.speed = 6 //30 //10
 
     // this.width = 66
     // this.height = 150
