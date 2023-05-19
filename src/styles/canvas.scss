@@ -1,11 +1,9 @@
-
 body {
-  margin: 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100vh;
-  // background-color: #f5f5f5;
   background-image: url("../src/img/greenSpace.png");
   background-position: center;
   background-size: cover;
@@ -22,6 +20,7 @@ h1 {
   position: absolute;
   top: 3%;
   left: 53%;
+  text-align: center;
   transform: translate(-50%, -50%);
   font-size: 55px;
   font-family: pixel2;
@@ -55,7 +54,7 @@ h1 {
 
 #github {
   position: fixed;
-  top: 20px;
+  top: 25px;
   right: 80px;
 }
 
@@ -64,6 +63,7 @@ h1 {
   top: 25px;
   right: 20px;
 }
+
 
 #menu {
   position: absolute;
@@ -125,26 +125,26 @@ h1 {
 
 @media screen and (max-width: 992px) {
   h1 {
-    top: 5%;
+    top: 4%; /* Adjust according to your design */
     left: 50%;
     font-size: 40px; /* Reduce font size */
   }
   #p1 {
-    top: 18%; /* Adjust position */
+    top: 20%; /* Adjust position */
     left: 50%;
     font-size: 16px; /* Reduce font size */
   }
   #p2 {
-    top: 22%; /* Adjust position */
+    top: 24%; /* Adjust position */
     left: 50%;
     font-size: 16px; /* Reduce font size */
   }
   #linkedin {
-    top: 60px; /* Adjust position */
+    top: 75px; /* Adjust position */
     right: 20px;
   }
   #github {
-    top: 60px; /* Adjust position */
+    top: 75px; /* Adjust position */
     right: 80px;
   }
 }
