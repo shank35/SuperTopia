@@ -38,7 +38,6 @@ h1 {
                -36px 36px #ff5722;
 }
 
-
 #btn-restart {
   position: absolute;
   bottom: 500px;
@@ -123,19 +122,19 @@ h1 {
   font-family: pixel2;
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1300px) {
   h1 {
     top: 4%; /* Adjust according to your design */
     left: 50%;
     font-size: 40px; /* Reduce font size */
   }
   #p1 {
-    top: 20%; /* Adjust position */
+    top: 90%; /* Adjust position */
     left: 50%;
     font-size: 16px; /* Reduce font size */
   }
   #p2 {
-    top: 24%; /* Adjust position */
+    top: 93%; /* Adjust position */
     left: 50%;
     font-size: 16px; /* Reduce font size */
   }
