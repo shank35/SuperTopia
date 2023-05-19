@@ -1,5 +1,3 @@
-
-
 // player.js
 
 import { resetMap, drawTimerBar, drawScore, collectCoin, updateScore } from "../index.js"
